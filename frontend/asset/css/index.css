@@ -86,14 +86,14 @@ body {
 }
 
 .nav-links li a {
-    color: white;
-    text-decoration: none;
-    padding: 8px 16px;
-    transition: background 0.3s;
+    display: flex; /* Use flex to center the SVG */
+    justify-content: center;
+    align-items: center;
 }
 
-.nav-links li a:hover {
-    background-color: #575757;
+.nav-links li img {
+    width: 24px; /* Set width for SVG icons */
+    height: 24px; /* Set height for SVG icons */
 }
 
 .hamburger {
