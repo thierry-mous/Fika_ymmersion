@@ -1,0 +1,131 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height for the body */
+}
+
+#content {
+    flex: 1; /* Allow content to take available space */
+    padding: 20px;
+    padding-bottom: 60px; /* Add padding to prevent content from being hidden behind the navbar */
+}
+
+.featured-dish, .promotions {
+    margin-bottom: 20px;
+}
+
+.featured-dish img {
+    width: 100%; /* Responsive image */
+    height: auto;
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden; /* Hide overflow for carousel */
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease; /* Smooth transition */
+}
+
+.promo-item {
+    min-width: 100%; /* Each item takes full width */
+    text-align: center;
+}
+
+.promo-item img {
+    width: 100%; /* Responsive image */
+    height: auto;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    position: fixed; /* Fix the navbar to the bottom */
+    bottom: 0; /* Position it at the bottom */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background 0.3s;
+}
+
+.nav-links li a:hover {
+    background-color: #575757;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.line {
+    height: 3px;
+    width: 25px;
+    background-color: white;
+    margin: 3px 0;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #333;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}

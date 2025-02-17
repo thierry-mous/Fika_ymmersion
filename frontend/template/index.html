@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fika Menu</title>
+    <link rel="stylesheet" href="../asset/css/index.css">
+</head>
+<body>
+    <div id="content">
+        <section class="featured-dish">
+            <h2>Plat du jour</h2>
+            <div class="dish">
+                <img src="path/to/your/image.jpg" alt="Poke Poulet">
+                <h3>Poke Poulet</h3>
+                <p>€8.50</p>
+            </div>
+        </section>
+
+        <section class="promotions">
+            <h2>Promotion du jour</h2>
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="promo-item">
+                        <img src="path/to/your/image.jpg" alt="Poke Poulet">
+                        <h3>Poke Poulet</h3>
+                        <p>€8.50</p>
+                    </div>
+                    <div class="promo-item">
+                        <img src="path/to/your/image.jpg" alt="Poke Poulet">
+                        <h3>Poke Poulet</h3>
+                        <p>€8.50</p>
+                    </div>
+                    <!-- Add more promo items as needed -->
+                </div>
+                <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
+                <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
+            </div>
+        </section>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
+            <li><a href="#menu" onclick="navigateTo('menu')">Menu</a></li>
+            <li><a href="#orders" onclick="navigateTo('orders')">Orders</a></li>
+            <li><a href="#dashboard" onclick="navigateTo('dashboard')">Dashboard</a></li>
+            <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <script src="index.js"></script>
+</body>
+</html>
