@@ -1,58 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fika Menu</title>
+    <title>FIKA - Restaurant Ynov</title>
     <link rel="stylesheet" href="../asset/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div id="content">
-        <section class="featured-dish">
-            <h2>Plat du jour</h2>
-            <div class="dish">
-                <img src="path/to/your/image.jpg" alt="Poke Poulet">
-                <h3>Poke Poulet</h3>
-                <p>€8.50</p>
-            </div>
-        </section>
+    <header>
+        <div class="logo">
+            <img src="../asset/img/logo-fika.png" alt="FIKA">
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-history"></i>
+            <i class="fas fa-bell"></i>
+        </div>
+    </header>
 
-        <section class="promotions">
-            <h2>Promotion du jour</h2>
-            <div class="carousel">
-                <div class="carousel-inner">
-                    <div class="promo-item">
-                        <img src="path/to/your/image.jpg" alt="Poke Poulet">
-                        <h3>Poke Poulet</h3>
-                        <p>€8.50</p>
-                    </div>
-                    <div class="promo-item">
-                        <img src="path/to/your/image.jpg" alt="Poke Poulet">
-                        <h3>Poke Poulet</h3>
-                        <p>€8.50</p>
-                    </div>
-                    <!-- Add more promo items as needed -->
-                </div>
-                <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
-                <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
-            </div>
-        </section>
+    <div class="search-container">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Que voulez-vous manger aujourd'hui ?">
+        </div>
     </div>
 
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="#home" onclick="navigateTo('home')"><img src="../asset/img/house-chimney-blank-svgrepo-com.svg" alt="Home"></a></li>
-            <li><a href="#menu" onclick="navigateTo('menu')"><img src="../asset/img/restaurant-menu-svgrepo-com.svg" alt="Menu"></a></li>
-            <li><a href="#orders" onclick="navigateTo('orders')"><img src="../asset/img/basket-shopping-svgrepo-com.svg" alt="Orders"></a></li>
-            <li><a href="#profile" onclick="navigateTo('profile')"><img src="../asset/img/user-svgrepo-com.svg" alt="Profile"></a></li>
-        </ul>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-    </nav>
+    <main>
+        <section class="categories">
+            <div class="categories-scroll">
+                <div class="category-item">
+                    <img src="../asset/img/plat.png" alt="plat chaud">
+                    <span>plat chaud Y-novant</span>
+                </div>
+                <div class="category-item">
+                    <img src="../asset/img/sandwich.png" alt="sandwich">
+                    <span>Y-snak</span>
+                </div>
+                <div class="category-item">
+                    <img src="../asset/img/salade.png" alt="Salade">
+                    <span>Salade Y-novant</span>
+                </div>
+                <div class="category-item">
+                    <img src="../asset/img/dessert.png" alt="Dessert">
+                    <span>Y-Dessert</span>
+                </div>
+            </div>
+        </section>
 
-    <script src="script.js"></script>
+        <section class="plat-du-jour">
+            <h2>Plat du jour</h2>
+            <div class="plat-card">
+                <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
+                <div class="plat-info">
+                    <h3>Poke Poulet</h3>
+                    <p class="description">Riz, poulet mariné, avocat, légumes frais</p>
+                    <div class="price-time">
+                        <p class="price">€8.50</p>
+                        <span class="time"><i class="fas fa-clock"></i> 5-10 min</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu-categories">
+            <h2>Promotions</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
+                    <div class="menu-info">
+                        <h3>Poke Poulet</h3>
+                        <p class="description">Riz, poulet mariné, avocat</p>
+                        <p class="price">€8.50</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="../asset/img/pokepoulet.jpg" alt="Poke Saumon">
+                    <div class="menu-info">
+                        <h3>Poke Saumon</h3>
+                        <p class="description">Riz, saumon frais, avocat</p>
+                        <p class="price">€9.50</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="../asset/img/pokepoulet.jpg" alt="Buddha Bowl">
+                    <div class="menu-info">
+                        <h3>Buddha Bowl</h3>
+                        <p class="description">Quinoa, légumes de saison, tofu</p>
+                        <p class="price">€8.90</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="../asset/img/pokepoulet.jpg" alt="Salade César">
+                    <div class="menu-info">
+                        <h3>Salade César</h3>
+                        <p class="description">Poulet grillé, parmesan, croûtons</p>
+                        <p class="price">€7.90</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="active">
+            <i class="fas fa-home"></i>
+            <span>Menu</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-utensils"></i>
+            <span>Menu</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Panier</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
 </body>
 </html>
