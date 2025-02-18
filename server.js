@@ -21,11 +21,11 @@ db.connect(err => {
     console.log('MySQL Connected...');
 });
 
-// Démarrer le serveur
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+// Routes d'authentification
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 
+// Routes existantes
 app.post('/api/dishes', (req, res) => {
     const { name, description, price } = req.body;
     const image = req.files.image;
@@ -37,4 +37,9 @@ app.post('/api/dishes', (req, res) => {
         }
         res.status(201).json({ message: 'Dish added', id: result.insertId });
     });
+});
+
+// Démarrer le serveur
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 }); 
