@@ -1,17 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2');
+const path = require('path');
 const app = express();
 const port = 3000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'your_username',
-    password: 'your_password',
-    database: 'your_database'
+    user: 'root',
+    password: '',
+    database: 'fika'
 });
 
 db.connect(err => {
@@ -22,7 +24,7 @@ db.connect(err => {
 });
 
 // Routes d'authentification
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./backend/src/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
 // Routes existantes
@@ -37,6 +39,31 @@ app.post('/api/dishes', (req, res) => {
         }
         res.status(201).json({ message: 'Dish added', id: result.insertId });
     });
+});
+
+// Route pour la page d'accueil
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+});
+
+// Route pour la page de connexion
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/login.html'));
+});
+
+// Route pour la page d'inscription
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/register.html'));
+});
+
+// Route pour le tableau de bord admin
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/admin.html'));
+});
+
+// Route pour le panier
+app.get('/order', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/order.html'));
 });
 
 // Démarrer le serveur
