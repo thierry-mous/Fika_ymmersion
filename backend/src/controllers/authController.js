@@ -26,6 +26,29 @@ class AuthController {
         });
     }
 
+    async form_register(req, res) {
+        const { email, password } = req.body;
+
+        // Hash le mot de passe
+        bcrypt.hash(password, 10, (err, hash) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+
+            const userData = {
+                email: email,
+                password: hash
+            };
+
+            User.create(userData, (err, userId) => {
+                if (err) {
+                    return res.status(500).json({ error: err });
+                }
+                res.status(201).json({ message: 'Utilisateur créé avec succès', userId: userId });
+            });
+        });
+    }
+
     async login(req, res) {
         try {
             const { email, password } = req.body;

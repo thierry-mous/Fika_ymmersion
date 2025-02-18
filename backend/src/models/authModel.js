@@ -54,6 +54,8 @@ class AuthModel {
         }
     }
 
+    
+
     generateToken(userId) {
         return jwt.sign(
             { userId: userId },

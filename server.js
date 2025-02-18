@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const path = require('path');
-const authRoutes = require('./routes/authRoutes'); // Assurez-vous que le chemin est correct
+const authRoutes = require('./backend/src/routes/authRoutes'); // Assurez-vous que le chemin est correct
 
 const app = express();
 const port = 3000;
@@ -29,19 +29,7 @@ db.connect(err => {
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
 
-// Routes existantes
-app.post('/api/dishes', (req, res) => {
-    const { name, description, price } = req.body;
-    const image = req.files.image;
 
-    const sql = 'INSERT INTO dishes (name, description, price, image) VALUES (?, ?, ?, ?)';
-    db.query(sql, [name, description, price, image], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err });
-        }
-        res.status(201).json({ message: 'Dish added', id: result.insertId });
-    });
-});
 
 // Route pour la page d'accueil
 app.get('/', (req, res) => {
@@ -73,9 +61,9 @@ app.get('/form_register', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/form_register.html'));
 });
 
-app.post('/inscription', (req, res) => {
+app.post('/form_register', (req, res) => {
     const { email, password } = req.body;
-    const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+    const sql = 'INSERT INTO utilisateurs (email, mot_de_passe) VALUES (?, ?)';
     
     db.query(sql, [email, password], (err, result) => {
         if (err) {
@@ -84,6 +72,7 @@ app.post('/inscription', (req, res) => {
         res.status(201).json({ message: 'Utilisateur créé avec succès' });
     });
 });
+
 
 // Démarrer le serveur
 app.listen(port, () => {
