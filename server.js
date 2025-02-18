@@ -2,12 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const path = require('path');
+const authRoutes = require('./routes/authRoutes'); // Assurez-vous que le chemin est correct
+
 const app = express();
 const port = 3000;
 
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -24,7 +27,6 @@ db.connect(err => {
 });
 
 // Routes d'authentification
-const authRoutes = require('./backend/src/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
 // Routes existantes

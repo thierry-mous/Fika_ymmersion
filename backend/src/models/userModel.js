@@ -1,8 +1,7 @@
-const mysql = require('mysql2');
-const db = require('../config/database'); // Assurez-vous que ce fichier existe et configure la connexion
+const db = require('../config/db'); // Assurez-vous que le chemin est correct
 
-const User = {
-    create: (userData, callback) => {
+class User {
+    static create(userData, callback) {
         const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
         db.query(sql, [userData.email, userData.password], (err, result) => {
             if (err) {
@@ -11,6 +10,6 @@ const User = {
             callback(null, result.insertId);
         });
     }
-};
+}
 
 module.exports = User;

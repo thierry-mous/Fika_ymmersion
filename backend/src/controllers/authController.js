@@ -63,7 +63,7 @@ class AuthController {
                 if (err) {
                     return res.status(500).json({ error: err });
                 }
-                res.status(201).json({ message: 'User created', userId: userId });
+                res.status(201).json({ message: 'Utilisateur créé avec succès', userId: userId });
             });
         });
     }

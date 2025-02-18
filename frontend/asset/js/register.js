@@ -1,37 +1,36 @@
-document.getElementById('form-register').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('form-register').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-    if (password !== confirmPassword) {
-        alert("Les mots de passe ne correspondent pas !");
-        return;
-    }
 
-    const userData = {
-        email: email,
-        password: password
-    };
+        const userData = {
+            email: email,
+            password: password
+        };
 
-    fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error);
-        } else {
+        fetch('http://localhost:3000/api/auth/inscription', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'inscription');
+            }
+            return response.json();
+        })
+        .then(data => {
             alert("Inscription réussie !");
             window.location.href = 'login.html'; // Rediriger vers la page de connexion
-        }
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de l\'inscription');
+        });
     });
 }); 
