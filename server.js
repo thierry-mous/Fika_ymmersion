@@ -66,6 +66,23 @@ app.get('/order', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/order.html'));
 });
 
+// Route pour le formulaire d'inscription
+app.get('/form_register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/form_register.html'));
+});
+
+app.post('/inscription', (req, res) => {
+    const { email, password } = req.body;
+    const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+    
+    db.query(sql, [email, password], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err });
+        }
+        res.status(201).json({ message: 'Utilisateur créé avec succès' });
+    });
+});
+
 // Démarrer le serveur
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

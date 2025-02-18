@@ -1,24 +1,29 @@
 const AuthModel = require('../models/authModel');
+const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
 
 class AuthController {
     async register(req, res) {
-        try {
-            const { email, password, name } = req.body;
-            
-            const result = await AuthModel.createUser({ email, password, name });
+        const { email, password } = req.body;
 
-            res.status(201).json({
-                success: true,
-                message: 'Utilisateur créé avec succès',
-                ...result
-            });
+        // Hash le mot de passe
+        bcrypt.hash(password, 10, (err, hash) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
 
-        } catch (error) {
-            res.status(error.message === 'Cet email est déjà utilisé' ? 400 : 500).json({
-                success: false,
-                message: error.message
+            const userData = {
+                email: email,
+                password: hash
+            };
+
+            User.create(userData, (err, userId) => {
+                if (err) {
+                    return res.status(500).json({ error: err });
+                }
+                res.status(201).json({ message: 'User created', userId: userId });
             });
-        }
+        });
     }
 
     async login(req, res) {
@@ -40,6 +45,29 @@ class AuthController {
             });
         }
     }
+    async inscription(req, res) {
+        const { email, password } = req.body;
+
+        // Hash le mot de passe
+        bcrypt.hash(password, 10, (err, hash) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+
+            const userData = {
+                email: email,
+                password: hash
+            };
+
+            User.create(userData, (err, userId) => {
+                if (err) {
+                    return res.status(500).json({ error: err });
+                }
+                res.status(201).json({ message: 'User created', userId: userId });
+            });
+        });
+    }
 }
+
 
 module.exports = new AuthController();

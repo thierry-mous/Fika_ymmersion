@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA - Inscription</title>
+    <link rel="stylesheet" href="../asset/css/form_register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Inscription</h1>
+    </header>
+
+    <main>
+        <form action="http://localhost:3000/inscription" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+            <label for="password">Mot de passe:</label>
+            <input type="password" name="password" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p>Déjà un compte ? <a href="login.html">Connectez-vous ici</a></p>
+    </main>
+
+    <script src="../asset/js/register.js"></script>
+</body>
+</html>
