@@ -3,45 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Panier</title>
+    <title>FIKA - Panier</title>
     <link rel="stylesheet" href="../asset/css/order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <h1>Panier</h1>
-    <div id="payment">
-        <h2>Paiement</h2>
-        <p>Visa *1234</p>
-    </div>
-    <div id="cart">
-        <h2>Articles</h2>
-        <ul>
-            <li>
-                <img src="path/to/image1.jpg" alt="Plat 1" class="cart-item-image">
-                <div class="item-details">
-                    <span>Plat 1</span>
-                    <span>Prix: 10.99€</span>
-                    <span>Quantité: 01</span>
+    <header>
+        <div class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1>Panier</h1>
+        <div class="empty-div"></div>
+    </header>
+
+    <main>
+        <div class="payment-section">
+            <div class="payment-header">
+                <span>PAYMENT</span>
+                <span>Visa *1234 <i class="fas fa-chevron-right"></i></span>
+            </div>
+        </div>
+
+        <div class="items-section">
+            <div class="items-header">
+                <span>ITEMS</span>
+                <span>DESCRIPTION</span>
+                <span>PRICE</span>
+            </div>
+
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="../asset/img/plat.png" alt="Product">
+                    <div class="item-details">
+                        <span class="brand">Brand</span>
+                        <span class="product-name">Product name</span>
+                        <span class="description">Description</span>
+                        <span class="quantity">Quantity: 01</span>
+                    </div>
+                    <span class="price">$10.99</span>
                 </div>
-                <button>Retirer</button>
-            </li>
-            <li>
-                <img src="path/to/image2.jpg" alt="Plat 2" class="cart-item-image">
-                <div class="item-details">
-                    <span>Plat 2</span>
-                    <span>Prix: 8.99€</span>
-                    <span>Quantité: 01</span>
+
+                <div class="cart-item">
+                    <img src="../asset/img/salade.png" alt="Product">
+                    <div class="item-details">
+                        <span class="brand">Brand</span>
+                        <span class="product-name">Product name</span>
+                        <span class="description">Description</span>
+                        <span class="quantity">Quantity: 01</span>
+                    </div>
+                    <span class="price">$8.99</span>
                 </div>
-                <button>Retirer</button>
-            </li>
-            <!-- Ajoutez d'autres plats ici -->
-        </ul>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-line">
+                <span>Subtotal (2)</span>
+                <span>$19.98</span>
+            </div>
+            <div class="summary-line total">
+                <span>Total</span>
+                <span>$19.98</span>
+            </div>
+        </div>
+    </main>
+
+    <div class="fixed-bottom">
+        <button class="place-order">
+            Place order
+        </button>
     </div>
-    <div id="total">
-        <h2>Subtotal (2): 19.98€</h2>
-        <h2>Frais de livraison: Gratuit</h2>
-        <h2>Taxes: 2.00€</h2>
-        <h2>Total: 21.98€</h2>
-    </div>
-    <button id="checkout">Passer la commande</button>
 </body>
 </html>
