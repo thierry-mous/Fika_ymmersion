@@ -3,26 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIKA - Inscription</title>
+    <title>FIKA - Créer un compte</title>
     <link rel="stylesheet" href="../asset/css/form_register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Inscription</h1>
-    </header>
-
     <main>
-        <form action="http://localhost:3000/inscription" method="POST">
-            <label for="email">Email:</label>
-            <input type="email" name="email" required>
-            <label for="password">Mot de passe:</label>
-            <input type="password" name="password" required>
-            <button type="submit">S'inscrire</button>
-        </form>
-        <p>Déjà un compte ? <a href="login.html">Connectez-vous ici</a></p>
-    </main>
+        <div class="logo">
+            <img src="../asset/img/logo-fika.png" alt="FIKA">
+        </div>
 
-    <script src="../asset/js/register.js"></script>
+        <h1>Create an account</h1>
+        <p class="subtitle">Enter your email to sign up for this app</p>
+
+        <form class="signup-form">
+            <input type="email" placeholder="email@domain.com" required>
+            <button type="submit" class="primary-button">Continue</button>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <div class="social-buttons">
+            <button class="social-button google">
+                <img src="../asset/img/google-icon.png" alt="Google">
+                Continue with Google
+            </button>
+            <button class="social-button apple">
+                <i class="fab fa-apple"></i>
+                Continue with Apple
+            </button>
+        </div>
+
+        <p class="terms">
+            By clicking continue, you agree to our 
+            <a href="#">Terms of Service</a> and 
+            <a href="#">Privacy Policy</a>
+        </p>
+    </main>
 </body>
 </html>
