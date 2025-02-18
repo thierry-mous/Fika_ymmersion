@@ -24,7 +24,7 @@ h1 {
 }
 
 .dropbtn {
-    background-color: #f1f1f1;
+    background-color: #e0e0e0;
     color: #333;
     padding: 10px;
     font-size: 16px;
@@ -32,6 +32,18 @@ h1 {
     cursor: pointer;
     width: 100%;
     text-align: left;
+    position: relative;
+}
+
+.dropbtn::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: solid transparent;
+    border-width: 5px;
+    border-top-color: #333;
 }
 
 .dropdown-content {
@@ -42,9 +54,6 @@ h1 {
     border: 1px solid #ddd;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
 .logout {
     background-color: #ff4d4d;
