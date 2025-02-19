@@ -63,13 +63,54 @@ app.get('/form_register', (req, res) => {
 
 app.post('/form_register', (req, res) => {
     const { email, password } = req.body;
-    const sql = 'INSERT INTO utilisateurs (email, mot_de_passe) VALUES (?, ?)';
-    
-    db.query(sql, [email, password], (err, result) => {
+    const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email = ?';
+    const insertUserSql = 'INSERT INTO utilisateurs (email, mot_de_passe) VALUES (?, ?)';
+
+    db.query(checkEmailSql, [email], (err, results) => {
         if (err) {
-            return res.status(500).json({ error: err });
+            return res.status(500).send(`
+                <p style="color:red;">Une erreur est survenue. Veuillez réessayer plus tard.</p>
+                <a href="/form_register">Retour au formulaire</a>
+            `);
         }
-        res.redirect('/');
+        if (results.length > 0) {
+            // Email déjà utilisé : on renvoie le formulaire avec un message d'erreur
+            return res.send(`
+                <!DOCTYPE html>
+                <html lang="fr">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>FIKA - Créer un compte</title>
+                    <link rel="stylesheet" href="../asset/css/form_register.css">
+                </head>
+                <body>
+                    <main>
+                        <form id="form-register" action="/form_register" method="POST">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required value="${email}">
+                            <label for="password">Mot de passe:</label>
+                            <input type="password" id="password" name="password" required>
+                            <button type="submit">S'inscrire</button>
+                        </form>
+                        <p style="color:red;">Email déjà utilisé</p>
+                        <p>Déjà un compte ? <a href="/login">Connectez-vous ici</a></p>
+                    </main>
+                </body>
+                </html>
+            `);
+        } else {
+            // Insérer l'utilisateur et rediriger vers la connexion
+            db.query(insertUserSql, [email, password], (err, result) => {
+                if (err) {
+                    return res.status(500).send(`
+                        <p style="color:red;">Une erreur est survenue. Veuillez réessayer plus tard.</p>
+                        <a href="/form_register">Retour au formulaire</a>
+                    `);
+                }
+                res.redirect('/login');
+            });
+        }
     });
 });
 
