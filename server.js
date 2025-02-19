@@ -69,7 +69,7 @@ app.post('/form_register', (req, res) => {
         if (err) {
             return res.status(500).json({ error: err });
         }
-        res.status(201).json({ message: 'Utilisateur créé avec succès' });
+        res.redirect('/login');
     });
 });
 
