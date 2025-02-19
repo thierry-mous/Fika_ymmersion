@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIKA - Dashboard Admin</title>
     <link rel="stylesheet" href="../asset/css/dashboard.css">
+    <link rel="stylesheet" href="../asset/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -80,9 +81,26 @@
             </div>
             
             <div class="dishes-grid" id="dishes-container">
-                <!-- Les plats seront affichés ici dynamiquement -->
             </div>
         </section>
+        <nav class="bottom-nav">
+            <a href="../template/index.html" class="active">
+                <i class="fas fa-home"></i>
+                <span>Acceuil</span>
+            </a>
+            <a href="../template/menu.html">
+                <i class="fas fa-utensils"></i>
+                <span>Menu</span>
+            </a>
+            <a href="../template/order.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Panier</span>
+            </a>
+            <a href="../template/profile.html">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </nav>
     </main>
 
     <script src="../asset/js/admin.js"></script>
