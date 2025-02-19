@@ -9,16 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Vérifiez si l'utilisateur existe dans le localStorage
-            const storedPassword = localStorage.getItem(email);
-
-            if (storedPassword && storedPassword === password) {
-                alert('Connexion réussie !');
-                // Redirigez vers la page d'accueil ou une autre page
-                window.location.href = 'index.html'; // Remplacez par votre page d'accueil
-            } else {
-                alert('Identifiants incorrects. Veuillez réessayer.');
-            }
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Connexion réussie !');
+                    window.location.href = 'index.html'; // Remplacez par votre page d'accueil
+                } else {
+                    alert('Identifiants incorrects. Veuillez réessayer.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
         });
     } else {
         console.error('L\'élément avec l\'ID "login-form" n\'a pas été trouvé.');
