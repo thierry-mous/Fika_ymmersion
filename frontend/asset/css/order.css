@@ -7,7 +7,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
-    padding-bottom: 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -17,6 +19,15 @@ header {
     padding: 15px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .back-button {
@@ -52,7 +63,12 @@ header h1 {
 
 .items-section {
     background: white;
-    padding: 15px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .items-header {
@@ -61,6 +77,10 @@ header h1 {
     color: #666;
     font-size: 14px;
     margin-bottom: 15px;
+}
+
+.cart-items {
+    margin-bottom: 20px;
 }
 
 .cart-item {
@@ -116,6 +136,15 @@ header h1 {
     font-size: 16px;
 }
 
+.summary-line.total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .total {
     margin-top: 15px;
     padding-top: 15px;
@@ -144,4 +173,11 @@ header h1 {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.command_n {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
 }
