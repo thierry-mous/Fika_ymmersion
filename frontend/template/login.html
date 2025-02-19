@@ -16,14 +16,16 @@
         <h1>Welcome back</h1>
         <p class="subtitle">Please enter your details to sign in</p>
 
-        <form class="login-form">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <div class="forgot-password">
-                <a href="#">Forgot password?</a>
-            </div>
-            <button type="submit" class="primary-button">Sign in</button>
-        </form>
+        <!-- ...existing code... -->
+<form class="login-form" action="http://localhost:3000/login" method="POST">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <div class="forgot-password">
+        <a href="#">Forgot password?</a>
+    </div>
+    <button type="submit" class="primary-button">Sign in</button>
+</form>
+<!-- ...existing code... -->
 
         <div class="divider">
             <span>or</span>
@@ -33,7 +35,5 @@
             Don't have an account? <a href="register.html">Sign up</a>
         </p>
     </main>
-
-    <script src="../asset/js/login.js"></script>
 </body>
 </html>

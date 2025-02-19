@@ -29,7 +29,6 @@ class AuthController {
     async form_register(req, res) {
         const { email, password } = req.body;
 
-        // Hash le mot de passe
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
                 return res.status(500).json({ error: err });
