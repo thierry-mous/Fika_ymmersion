@@ -6,7 +6,6 @@ class AuthController {
     async register(req, res) {
         const { email, password } = req.body;
 
-        // Hash le mot de passe
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
                 return res.status(500).json({ error: err });
@@ -67,10 +66,14 @@ class AuthController {
             });
         }
     }
+
+    async index(req, res) {
+        res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+    }
+
     async inscription(req, res) {
         const { email, password } = req.body;
 
-        // Hash le mot de passe
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
                 return res.status(500).json({ error: err });

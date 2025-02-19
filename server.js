@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
-const authRoutes = require('./backend/src/routes/authRoutes'); // Assurez-vous que le chemin est correct
+const authRoutes = require('./backend/src/routes/authRoutes.js'); // Assurez-vous que le chemin est correct
 const cors = require('cors');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
@@ -48,7 +48,7 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-app.get('/', (req, res) => {
+app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
 });
 
@@ -160,8 +160,15 @@ app.post('/login', (req, res) => {
 });
 
 
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/index'); // Rediriger vers la page d'accueil en cas d'erreur
+        }
+        res.redirect('/login'); // Rediriger vers la page de connexion
+    });
 });
 
 // Démarrer le serveur
