@@ -48,7 +48,7 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-app.get('/index', (req, res) => {
+app.get('/index', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
 });
 
@@ -146,11 +146,7 @@ app.post('/login', (req, res) => {
             req.session.role = results[0].role;
 
             // Envoyer un cookie de session
-            res.cookie('sessionId', req.sessionID, {
-                httpOnly: true,
-                secure: false, // true si HTTPS
-                maxAge: 1000 * 60 * 60 * 24 // 1 jour
-            });
+            
 
             res.redirect('/index'); // Rediriger vers la page d'accueil
         } else {
@@ -165,8 +161,9 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('/index'); // Rediriger vers la page d'accueil en cas d'erreur
+            return res.redirect('/index'); // Rediriger en cas d'erreur
         }
+        res.clearCookie('connect.sid'); // Supprime le cookie de session (nom par défaut d'express-session)
         res.redirect('/login'); // Rediriger vers la page de connexion
     });
 });
