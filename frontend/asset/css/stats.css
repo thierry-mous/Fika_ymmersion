@@ -23,6 +23,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 main {
@@ -91,10 +92,37 @@ main {
     margin-top: 10px;
 }
 
+.back-button {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
 .progress {
     height: 100%;
     border-radius: 3px;
     background: #4CAF50;
+}
+
+.back-button:hover {
+    color: #666;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+    flex: 1;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
 }
 
 /* Stats table section */
