@@ -69,8 +69,30 @@ app.post('/form_register', (req, res) => {
         if (err) {
             return res.status(500).json({ error: err });
         }
-        res.redirect('/login');
+        res.redirect('/');
     });
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const sql = 'SELECT * FROM utilisateurs WHERE email = ? AND mot_de_passe = ?';
+
+    db.query(sql, [email, password], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err });
+        }
+        if (results.length > 0) {
+            // Utilisateur trouvé, rediriger vers la page d'accueil
+            res.redirect('/index');
+        } else {
+            // Utilisateur non trouvé, renvoyer à la page de connexion avec un message d'erreur
+            res.status(401).send('Email ou mot de passe incorrect');
+        }
+    });
+});
+
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
 });
 
 
