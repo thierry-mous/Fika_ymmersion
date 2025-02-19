@@ -48,9 +48,23 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
+const fs = require('fs');
+
 app.get('/index', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+    const isAdmin = req.session.role === 'admin';
+    fs.readFile(path.join(__dirname, 'frontend/template/index.html'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Erreur lors du chargement de la page');
+        }
+        const modifiedData = data.replace('<!-- ADMIN_LINK -->', isAdmin ? '<a href="/dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>' : '');
+        res.send(modifiedData);
+    });
 });
+
+app.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/dashboard.html'));
+}
+);
 
 // Route pour la page de connexion
 app.get('/login', (req, res) => {
