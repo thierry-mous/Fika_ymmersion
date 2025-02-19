@@ -1,17 +1,26 @@
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Empêche le rechargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('login-form');
+    console.log(form); // Vérifiez si cela affiche l'élément ou null
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
 
-    // Vérifiez si l'utilisateur existe dans le localStorage
-    const storedPassword = localStorage.getItem(email);
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-    if (storedPassword && storedPassword === password) {
-        alert('Connexion réussie !');
-        // Redirigez vers la page d'accueil ou une autre page
-        window.location.href = 'index.html'; // Remplacez par votre page d'accueil
+            // Vérifiez si l'utilisateur existe dans le localStorage
+            const storedPassword = localStorage.getItem(email);
+
+            if (storedPassword && storedPassword === password) {
+                alert('Connexion réussie !');
+                // Redirigez vers la page d'accueil ou une autre page
+                window.location.href = 'index.html'; // Remplacez par votre page d'accueil
+            } else {
+                alert('Identifiants incorrects. Veuillez réessayer.');
+            }
+        });
     } else {
-        alert('Identifiants incorrects. Veuillez réessayer.');
+        console.error('L\'élément avec l\'ID "login-form" n\'a pas été trouvé.');
     }
 }); 
