@@ -5,6 +5,7 @@ const path = require('path');
 const authRoutes = require('./backend/src/routes/authRoutes'); // Assurez-vous que le chemin est correct
 const cors = require('cors');
 const session = require('express-session');
+const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
 
 const app = express();
 const port = 3000;
@@ -19,9 +20,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'votre_secret', // Changez cela pour une valeur secrète
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Mettez à true si vous utilisez HTTPS
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // true si HTTPS
+        httpOnly: true, // Empêche l'accès au cookie via JS côté client
+        maxAge: 1000 * 60 * 60 * 24 // Durée de vie du cookie (1 jour ici)
+    }
 }));
+
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -56,13 +62,14 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/register.html'));
 });
 
-// Route pour le tableau de bord admin
-app.get('/admin', (req, res) => {
+
+app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/admin.html'));
 });
 
-// Route pour le panier
-app.get('/order', (req, res) => {
+
+// Route pour le panier (protégée)
+app.get('/order', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/order.html'));
 });
 
@@ -133,16 +140,25 @@ app.post('/login', (req, res) => {
             return res.status(500).json({ error: 'Erreur de base de données' });
         }
         if (results.length > 0) {
-            // Connexion réussie, rediriger vers la page d'accueil
-            req.session.errorMessage = null; // Réinitialiser le message d'erreur
-            res.redirect('/index'); // Remplacez par votre page d'accueil
+            // Connexion réussie, stocker les informations de l'utilisateur dans la session
+            req.session.userId = results[0].id;
+            req.session.email = results[0].email;
+            req.session.role = results[0].role;
+
+            // Envoyer un cookie de session
+            res.cookie('sessionId', req.sessionID, {
+                httpOnly: true,
+                secure: false, // true si HTTPS
+                maxAge: 1000 * 60 * 60 * 24 // 1 jour
+            });
+
+            res.redirect('/index'); // Rediriger vers la page d'accueil
         } else {
-            // Identifiants incorrects, rediriger vers la page de connexion avec un message d'erreur
-            req.session.errorMessage = 'Identifiants incorrects. Veuillez réessayer.';
-            res.redirect('/login');
+            res.status(401).send('Identifiants incorrects. Veuillez réessayer.');
         }
     });
 });
+
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
@@ -151,4 +167,4 @@ app.get('/index', (req, res) => {
 // Démarrer le serveur
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
-}); 
+});

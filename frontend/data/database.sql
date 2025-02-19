@@ -74,3 +74,6 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 COMMIT;
+  INSERT INTO `utilisateurs` (`nom`, `email`, `mot_de_passe`, `role`) 
+  VALUES ('Admin', 'admin@example.com', 'adminpassword', 'admin');
+
