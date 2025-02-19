@@ -25,9 +25,9 @@ app.use(session({
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'votre_nom_utilisateur',
-    password: 'votre_mot_de_passe',
-    database: 'votre_nom_base_de_donnees'
+    user: 'root',
+    password: '',
+    database: 'fika'
 });
 
 db.connect(err => {
