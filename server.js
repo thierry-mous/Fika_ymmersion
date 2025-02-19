@@ -28,7 +28,6 @@ app.use(session({
     }
 }));
 
-
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -48,8 +47,21 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-app.get('/index', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+const fs = require('fs');
+
+app.get('/index', (req, res) => {
+    const isAdmin = req.session.role === 'admin';
+    fs.readFile(path.join(__dirname, 'frontend/template/index.html'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Erreur lors du chargement de la page');
+        }
+        const modifiedData = data.replace('<!-- ADMIN_LINK -->', isAdmin ? '<a href="/dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>' : '');
+        res.send(modifiedData);
+    });
+});
+
+app.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/dashboard.html'));
 });
 
 // Route pour la page de connexion
@@ -62,11 +74,9 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/register.html'));
 });
 
-
 app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/admin.html'));
 });
-
 
 // Route pour le panier (protégée)
 app.get('/order', isAuthenticated, (req, res) => {
@@ -146,17 +156,12 @@ app.post('/login', (req, res) => {
             req.session.role = results[0].role;
 
             // Envoyer un cookie de session
-            
-
             res.redirect('/index'); // Rediriger vers la page d'accueil
         } else {
             res.status(401).send('Identifiants incorrects. Veuillez réessayer.');
         }
     });
 });
-
-
-
 
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
@@ -165,6 +170,24 @@ app.get('/logout', (req, res) => {
         }
         res.clearCookie('connect.sid'); // Supprime le cookie de session (nom par défaut d'express-session)
         res.redirect('/login'); // Rediriger vers la page de connexion
+    });
+});
+
+// Route pour la page de profil
+app.get('/profile', isAuthenticated, (req, res) => {
+    const userId = req.session.userId;
+    const query = 'SELECT nom, prenom FROM utilisateurs WHERE id = ?';
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            return res.status(500).send('Erreur lors de la récupération des informations utilisateur');
+        }
+        if (results.length > 0) {
+            const { nom, prenom } = results[0];
+            res.json({ nom, prenom });
+        } else {
+            res.status(404).send('Utilisateur non trouvé');
+        }
     });
 });
 
