@@ -8,17 +8,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Connexion</h1>
-    </header>
-
     <main>
-        <form id="login-form">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
+        <div class="logo">
+            <img src="../asset/img/logo-fika.png" alt="FIKA">
+        </div>
+
+        <h1>Welcome back</h1>
+        <p class="subtitle">Please enter your details to sign in</p>
+
+        <form class="login-form">
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="primary-button">Sign in</button>
         </form>
-        <p>Pas encore de compte ? <a href="register.html">Inscrivez-vous ici</a></p>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <p class="signup-link">
+            Don't have an account? <a href="register.html">Sign up</a>
+        </p>
     </main>
 
     <script src="../asset/js/login.js"></script>
