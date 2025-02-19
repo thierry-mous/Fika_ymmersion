@@ -1,35 +1,45 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const path = require('path');
 const authRoutes = require('./backend/src/routes/authRoutes'); // Assurez-vous que le chemin est correct
+const cors = require('cors');
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Middleware pour les sessions
+app.use(session({
+    secret: 'votre_secret', // Changez cela pour une valeur secrète
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Mettez à true si vous utilisez HTTPS
+}));
+
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'fika'
+    user: 'votre_nom_utilisateur',
+    password: 'votre_mot_de_passe',
+    database: 'votre_nom_base_de_donnees'
 });
 
 db.connect(err => {
     if (err) {
-        throw err;
+        console.error('Erreur de connexion à la base de données:', err);
+        return;
     }
-    console.log('MySQL Connected...');
+    console.log('Connecté à la base de données MySQL');
 });
 
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
-
-
 
 // Route pour la page d'accueil
 app.get('/', (req, res) => {
@@ -116,18 +126,20 @@ app.post('/form_register', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const sql = 'SELECT * FROM utilisateurs WHERE email = ? AND mot_de_passe = ?';
+    const query = 'SELECT * FROM utilisateurs WHERE email = ? AND mot_de_passe = ?';
 
-    db.query(sql, [email, password], (err, results) => {
+    db.query(query, [email, password], (err, results) => {
         if (err) {
-            return res.status(500).json({ error: err });
+            return res.status(500).json({ error: 'Erreur de base de données' });
         }
         if (results.length > 0) {
-            // Utilisateur trouvé, rediriger vers la page d'accueil
-            res.redirect('/index');
+            // Connexion réussie, rediriger vers la page d'accueil
+            req.session.errorMessage = null; // Réinitialiser le message d'erreur
+            res.redirect('/index'); // Remplacez par votre page d'accueil
         } else {
-            // Utilisateur non trouvé, renvoyer à la page de connexion avec un message d'erreur
-            res.status(401).send('Email ou mot de passe incorrect');
+            // Identifiants incorrects, rediriger vers la page de connexion avec un message d'erreur
+            req.session.errorMessage = 'Identifiants incorrects. Veuillez réessayer.';
+            res.redirect('/login');
         }
     });
 });
@@ -136,8 +148,7 @@ app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
 });
 
-
 // Démarrer le serveur
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 }); 
