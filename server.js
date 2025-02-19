@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
-const authRoutes = require('./backend/src/routes/authRoutes'); // Assurez-vous que le chemin est correct
+const authRoutes = require('./backend/src/routes/authRoutes.js'); // Assurez-vous que le chemin est correct
 const cors = require('cors');
 const session = require('express-session');
 
@@ -42,7 +42,7 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-app.get('/', (req, res) => {
+app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
 });
 
@@ -133,7 +133,8 @@ app.post('/login', (req, res) => {
             return res.status(500).json({ error: 'Erreur de base de données' });
         }
         if (results.length > 0) {
-            // Connexion réussie, rediriger vers la page d'accueil
+            // Connexion réussie, stocker l'email dans la session
+            req.session.user = { email: email }; // Stocker l'email dans la session
             req.session.errorMessage = null; // Réinitialiser le message d'erreur
             res.redirect('/index'); // Remplacez par votre page d'accueil
         } else {
@@ -144,8 +145,15 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/index'); // Rediriger vers la page d'accueil en cas d'erreur
+        }
+        res.redirect('/login'); // Rediriger vers la page de connexion
+    });
 });
 
 // Démarrer le serveur
