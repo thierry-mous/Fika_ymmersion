@@ -1,4 +1,4 @@
-/* form_register.css */
+/* register.css */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +13,7 @@ body {
     flex-direction: column;
 }
 
-main {
+.container {
     flex: 1;
     padding: 30px 20px;
     max-width: 400px;
@@ -31,25 +31,33 @@ main {
     height: auto;
 }
 
-h1 {
+h2 {
     font-size: 24px;
     color: #333;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.subtitle {
+p {
     color: #666;
     text-align: center;
     margin-bottom: 30px;
     font-size: 14px;
 }
 
-.signup-form {
+#form-register {
     margin-bottom: 20px;
 }
 
-input[type="email"] {
+#form-register label {
+    display: block;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+input[type="email"],
+input[type="password"] {
     width: 100%;
     padding: 15px;
     border: 1px solid #ddd;
@@ -58,7 +66,7 @@ input[type="email"] {
     margin-bottom: 15px;
 }
 
-.primary-button {
+button[type="submit"] {
     width: 100%;
     padding: 15px;
     background: #000;
@@ -68,16 +76,17 @@ input[type="email"] {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-.divider {
+.or-divider {
     text-align: center;
     margin: 20px 0;
     position: relative;
 }
 
-.divider::before,
-.divider::after {
+.or-divider::before,
+.or-divider::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -86,63 +95,107 @@ input[type="email"] {
     background: #ddd;
 }
 
-.divider::before {
+.or-divider::before {
     left: 0;
 }
 
-.divider::after {
+.or-divider::after {
     right: 0;
 }
 
-.divider span {
-    background: white;
-    padding: 0 10px;
-    color: #666;
-    font-size: 14px;
-}
-
-.social-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.social-button {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f8f8f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.social-button img {
-    width: 20px;
-    height: 20px;
-}
-
-.social-button i {
-    font-size: 20px;
-}
-
-.terms {
+.signup-link {
     text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.signup-link a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 20px;
     font-size: 12px;
     color: #666;
     line-height: 1.5;
 }
 
-.terms a {
+.footer-text a {
     color: #333;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.terms a:hover {
+.footer-text a:hover {
     text-decoration: underline;
 }
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between buttons */
+}
+
+.google-button, .apple-button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.google-button {
+    background-color: #db4437; /* Google red */
+    color: white;
+}
+
+.apple-button {
+    background-color: #000; /* Apple black */
+    color: white;
+} 

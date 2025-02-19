@@ -1,4 +1,4 @@
-/* signup.css */
+/* register.css */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -133,3 +133,21 @@ form button {
 form button:hover {
     background-color: #45a049;
 }
+
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.signup-link a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+} 
