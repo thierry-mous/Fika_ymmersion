@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA - Notifications</title>
+    <link rel="stylesheet" href="../asset/css/notif.css">
+    <link rel="stylesheet" href="../asset/css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Notifications</h1>
+            <div class="admin-info">
+                <span class="admin-name">Admin</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="notifications-section">
+            <div class="section-header">
+                <h2>Centre de notifications</h2>
+                <div class="filter-container">
+                    <select id="notif-filter">
+                        <option value="all">Toutes les notifications</option>
+                        <option value="stock">Stock</option>
+                        <option value="reservation">Réservations</option>
+                        <option value="system">Système</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="notifications-container">
+                <!-- Notification Urgente -->
+                <div class="notification-card urgent">
+                    <div class="notif-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span class="timestamp">Il y a 5 minutes</span>
+                    </div>
+                    <div class="notif-content">
+                        <h3>Stock épuisé</h3>
+                        <p>Le Poke Bowl Saumon n'est plus disponible en stock</p>
+                    </div>
+                    <div class="notif-actions">
+                        <button class="action-btn">Gérer le stock</button>
+                        <button class="dismiss-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+                <!-- Notification Info -->
+                <div class="notification-card info">
+                    <div class="notif-header">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="timestamp">Il y a 30 minutes</span>
+                    </div>
+                    <div class="notif-content">
+                        <h3>Réservations ouvertes</h3>
+                        <p>Les réservations pour la semaine prochaine sont maintenant ouvertes</p>
+                    </div>
+                    <div class="notif-actions">
+                        <button class="action-btn">Voir les réservations</button>
+                        <button class="dismiss-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+                <!-- Notification Success -->
+                <div class="notification-card success">
+                    <div class="notif-header">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="timestamp">Il y a 1 heure</span>
+                    </div>
+                    <div class="notif-content">
+                        <h3>Mise à jour réussie</h3>
+                        <p>Le menu a été mis à jour avec succès</p>
+                    </div>
+                    <div class="notif-actions">
+                        <button class="action-btn">Voir le menu</button>
+                        <button class="dismiss-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+            <nav class="bottom-nav">
+                <a href="../template/index.html" class="active">
+                    <i class="fas fa-home"></i>
+                    <span>Acceuil</span>
+                </a>
+                <a href="../template/menu.html">
+                    <i class="fas fa-utensils"></i>
+                    <span>Menu</span>
+                </a>
+                <a href="../template/order.html">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Panier</span>
+                </a>
+                <a href="../template/profile.html">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </a>
+            </nav>
+        </section>
+    </main>
+
+    <script src="../asset/js/notif.js"></script>
+</body>
+</html>
