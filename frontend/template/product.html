@@ -60,7 +60,24 @@
                         <img src="../uploads/${dish.image}" alt="${dish.nom}">
                         <p>${dish.description}</p>
                         <p>Prix: €${dish.prix}</p>
+                        <button class="add-to-cart" data-id="${dish.id}">Ajouter au panier</button>
                     `;
+
+                    document.querySelector('.add-to-cart').addEventListener('click', (event) => {
+                        const dishId = event.target.getAttribute('data-id');
+                        fetch('http://localhost:3000/api/cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ id: dishId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Plat ajouté au panier');
+                        })
+                        .catch(error => console.error('Erreur lors de l\'ajout au panier:', error));
+                    });
                 })
                 .catch(error => console.error('Erreur lors de la récupération du plat:', error));
         });

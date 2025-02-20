@@ -44,6 +44,7 @@ header {
     background: white;
     border-radius: 15px;
     margin: 15px;
+    padding-bottom: 20px;
 }
 
 .product-details h1 {
@@ -104,4 +105,36 @@ header {
 
 .bottom-nav span {
     font-size: 12px;
+}
+
+.add-to-cart {
+    display: block;
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px 30px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.add-to-cart:hover {
+    background-color: #27ae60;
+}
+
+.add-to-cart:active {
+    transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+    .add-to-cart {
+        width: 60%;
+    }
 }
