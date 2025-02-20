@@ -85,7 +85,7 @@
                     document.getElementById('dish-name').value = data.nom || '';
                     document.getElementById('dish-description').value = data.description || '';
                     document.getElementById('dish-price').value = data.prix || '';
-                    document.getElementById('dish-category').value = data.categorie_id || '1';
+                    document.getElementById('dish-category').value = data.categorie || '1';
                 })
                 .catch(error => {
                     console.error('Erreur:', error);

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIKA - Poke</title>
+    <title>FIKA - Détails du Plat</title>
     <link rel="stylesheet" href="../asset/css/product.css">
+    <link rel="stylesheet" href="../asset/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -13,100 +14,56 @@
             <img src="../asset/img/logo-fika.png" alt="FIKA">
         </div>
         <div class="header-icons">
-            <i class="fas fa-history"></i>
-            <i class="fas fa-bell"></i>
+            <a href="../template/history.html"><i class="fas fa-history"></i></a>
+            <a href="../template/notif.html"><i class="fas fa-bell"></i></a>
+            <a href="../template/stats.html"><i class="fas fa-chart-line"></i></a>
+            <a href="../template/dashboard.html"><i class="fas fa-plus"></i></a>
         </div>
     </header>
 
     <main>
-        <h1 class="h-product">salade Y-novante</h1>
-        <div class="product-image">
-            <img src="../asset/img/pokepoulet.jpg" alt="Poke">
-        </div>
-
-        <div class="product-info">
-            <h1>Poke</h1>
-            <p class="price">€8.50</p>
-        </div>
-
-        <div class="options-section">
-            <h3 class="options-title">Choisir la saveur</h3>
-            <div class="options-list">
-                <div class="option-item">
-                    <input type="radio" id="poulet" name="saveur" value="poulet">
-                    <label for="poulet">Poulet</label>
-                </div>
-                <div class="option-item">
-                    <input type="radio" id="veggie" name="saveur" value="veggie">
-                    <label for="veggie">Veggie</label>
-                </div>
-                <div class="option-item">
-                    <input type="radio" id="truite" name="saveur" value="truite">
-                    <label for="truite">Truite</label>
-                </div>
-                <div class="option-item">
-                    <input type="radio" id="crevette" name="saveur" value="crevette">
-                    <label for="crevette">Crevette</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="description-section">
-            <h3 class="description-title">Description</h3>
-            <div class="description-content">
-                <div class="description-item">
-                    <span class="label">Ingrédients</span>
-                    <p class="text">Riz vinaigré, poulet mariné, avocat, concombre, carottes, edamame, graines de sésame, sauce soja</p>
-                </div>
-                
-                <div class="description-item">
-                    <span class="label">Allergènes</span>
-                    <p class="text">Soja, sésame, gluten</p>
-                </div>
-                
-                <div class="description-item">
-                    <span class="label">Valeurs nutritionnelles</span>
-                    <div class="nutrition-info">
-                        <div class="nutrition-item">
-                            <span>Calories</span>
-                            <span>450 kcal</span>
-                        </div>
-                        <div class="nutrition-item">
-                            <span>Protéines</span>
-                            <span>25g</span>
-                        </div>
-                        <div class="nutrition-item">
-                            <span>Glucides</span>
-                            <span>65g</span>
-                        </div>
-                        <div class="nutrition-item">
-                            <span>Lipides</span>
-                            <span>12g</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="product-details" id="product-details">
+            <!-- Les détails du plat seront affichés ici -->
         </div>
     </main>
 
-    <div class="fixed-bottom">
-        <button class="add-to-cart">
-            Ajouter à mon panier
-        </button>
-        <nav class="bottom-nav">
-            <a href="index.html">
-                <i class="fas fa-home"></i>
-            </a>
-            <a href="menu.html">
-                <i class="fas fa-utensils"></i>
-            </a>
-            <a href="../template/order.html" class="active">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            <a href="../template/profile.html">
-                <i class="fas fa-user"></i>
-            </a>
-        </nav>
-    </div>
+    <nav class="bottom-nav">
+        <a href="../template/index.html" class="active">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="../template/menu.html">
+            <i class="fas fa-utensils"></i>
+            <span>Menu</span>
+        </a>
+        <a href="../template/order.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Panier</span>
+        </a>
+        <a href="../template/profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dishId = urlParams.get('id');
+
+            fetch(`http://localhost:3000/api/plats/${dishId}`)
+                .then(response => response.json())
+                .then(dish => {
+                    const productDetails = document.getElementById('product-details');
+                    productDetails.innerHTML = `
+                        <h1>${dish.nom}</h1>
+                        <img src="../uploads/${dish.image}" alt="${dish.nom}">
+                        <p>${dish.description}</p>
+                        <p>Prix: €${dish.prix}</p>
+                    `;
+                })
+                .catch(error => console.error('Erreur lors de la récupération du plat:', error));
+        });
+    </script>
 </body>
 </html>

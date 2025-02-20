@@ -31,39 +31,19 @@
                 <span>PRICE</span>
             </div>
 
-            <div class="cart-items">
-                <div class="cart-item">
-                    <img src="../asset/img/plat.png" alt="Product">
-                    <div class="item-details">
-                        <span class="brand">Brand</span>
-                        <span class="product-name">Product name</span>
-                        <span class="description">Description</span>
-                        <span class="quantity">Quantity: 01</span>
-                    </div>
-                    <span class="price">$10.99</span>
-                </div>
-
-                <div class="cart-item">
-                    <img src="../asset/img/salade.png" alt="Product">
-                    <div class="item-details">
-                        <span class="brand">Brand</span>
-                        <span class="product-name">Product name</span>
-                        <span class="description">Description</span>
-                        <span class="quantity">Quantity: 01</span>
-                    </div>
-                    <span class="price">$8.99</span>
-                </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Les éléments du panier seront affichés ici -->
             </div>
         </div>
 
         <div class="summary">
             <div class="summary-line">
-                <span>Subtotal (2)</span>
-                <span>$19.98</span>
+                <span>Subtotal (<span id="item-count">0</span>)</span>
+                <span id="subtotal">$0.00</span>
             </div>
             <div class="summary-line total">
                 <span>Total</span>
-                <span>$19.98</span>
+                <span id="total">$0.00</span>
             </div>
         </div>
     </main>
@@ -78,6 +58,44 @@
     function goBack() {
         window.history.back();
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('http://localhost:3000/api/cart')
+            .then(response => response.json())
+            .then(data => {
+                const cartItemsContainer = document.getElementById('cart-items');
+                const itemCountElement = document.getElementById('item-count');
+                const subtotalElement = document.getElementById('subtotal');
+                const totalElement = document.getElementById('total');
+
+                let itemCount = 0;
+                let subtotal = 0;
+
+                data.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.classList.add('cart-item');
+                    cartItemElement.innerHTML = `
+                        <img src="../uploads/${item.image}" alt="${item.nom}">
+                        <div class="item-details">
+                            <span class="product-name">${item.nom}</span>
+                            <span class="description">${item.description}</span>
+                            <span class="quantity">Quantity: ${item.quantite}</span>
+                        </div>
+                        <span class="price">€${item.prix}</span>
+                    `;
+
+                    cartItemsContainer.appendChild(cartItemElement);
+
+                    itemCount += item.quantite;
+                    subtotal += item.prix * item.quantite;
+                });
+
+                itemCountElement.textContent = itemCount;
+                subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+                totalElement.textContent = `€${subtotal.toFixed(2)}`;
+            })
+            .catch(error => console.error('Erreur lors de la récupération du panier:', error));
+    });
     </script>
 </body>
 </html>

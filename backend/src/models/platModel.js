@@ -13,10 +13,11 @@ const ajouterPlat = (nom, description, prix, categorie, image, callback) => {
     });
 };
 
-const modifierPlat = (id, nom, description, prix, categorie, image, callback) => {
-    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie = ?, image = ? WHERE id = ?';
-    db.query(query, [nom, description, prix, categorie, image, id], (err, result) => {
+const modifierPlat = (id, nom, description, prix, categorie, callback) => {
+    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie = ? WHERE id = ?';
+    db.query(query, [nom, description, prix, categorie, id], (err, result) => {
         if (err) {
+            console.error('Erreur SQL:', err);
             return callback(err, null);
         }
         callback(null, result);
