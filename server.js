@@ -294,6 +294,81 @@ app.get('/api/cart', (req, res) => {
     });
 });
 
+<<<<<<< HEAD
+=======
+app.post('/api/order', (req, res) => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour passer une commande' });
+    }
+
+    const getCartQuery = `
+        SELECT plat_id, quantite, prix
+        FROM panier
+        JOIN plats ON panier.plat_id = plats.id
+        WHERE utilisateur_id = ?
+    `;
+
+    db.query(getCartQuery, [userId], (err, cartItems) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération du panier' });
+        }
+
+        if (cartItems.length === 0) {
+            return res.status(400).json({ message: 'Votre panier est vide' });
+        }
+
+        const total = cartItems.reduce((sum, item) => sum + item.prix * item.quantite, 0);
+
+        const createOrderQuery = `
+            INSERT INTO commandes (utilisateur_id, total)
+            VALUES (?, ?)
+        `;
+
+        db.query(createOrderQuery, [userId, total], (err, result) => {
+            if (err) {
+                console.error('Erreur SQL:', err);
+                return res.status(500).json({ message: 'Erreur lors de la création de la commande' });
+            }
+
+            const orderId = result.insertId;
+
+            const createOrderDetailsQuery = `
+                INSERT INTO details_commande (commande_id, plat_id, quantite)
+                VALUES ?
+            `;
+
+            const orderDetails = cartItems.map(item => [orderId, item.plat_id, item.quantite]);
+
+            db.query(createOrderDetailsQuery, [orderDetails], (err) => {
+                if (err) {
+                    console.error('Erreur SQL:', err);
+                    return res.status(500).json({ message: 'Erreur lors de la création des détails de la commande' });
+                }
+
+                const clearCartQuery = `
+                    DELETE FROM panier
+                    WHERE utilisateur_id = ?
+                `;
+
+                db.query(clearCartQuery, [userId], (err) => {
+                    if (err) {
+                        console.error('Erreur SQL:', err);
+                        return res.status(500).json({ message: 'Erreur lors de la suppression du panier' });
+                    }
+
+                    res.status(200).json({ message: 'Commande passée avec succès' });
+                });
+            });
+        });
+    });
+});
+
+
+// Middleware pour gérer les erreurs
+>>>>>>> 11710455a96eeb4eb4de8a357460466214ee04ba
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Quelque chose a mal tourné!');
