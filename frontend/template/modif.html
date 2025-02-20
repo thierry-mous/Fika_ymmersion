@@ -59,31 +59,38 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Récupérer l'ID depuis l'URL de manière plus robuste
+            // Récupérer l'ID depuis l'URL
             const urlParams = new URLSearchParams(window.location.search);
             const platId = urlParams.get('id');
 
+            console.log('ID du plat:', platId); // Pour déboguer
+
             if (!platId) {
-                console.error('Aucun ID de plat spécifié');
+                alert('Aucun ID de plat spécifié');
+                history.back();
                 return;
             }
 
-            // Récupérer les données du plat à partir de l'API
+            // Récupérer les données du plat
             fetch(`http://localhost:3000/api/plats/${platId}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Plat non trouvé');
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
                 })
                 .then(data => {
-                    document.getElementById('dish-name').value = data.nom;
-                    document.getElementById('dish-description').value = data.description;
-                    document.getElementById('dish-price').value = data.prix;
-                    document.getElementById('dish-category').value = data.categorie_id;
+                    console.log('Données reçues:', data); // Pour déboguer
+                    if (!data) {
+                        throw new Error('Aucune donnée reçue');
+                    }
+                    document.getElementById('dish-name').value = data.nom || '';
+                    document.getElementById('dish-description').value = data.description || '';
+                    document.getElementById('dish-price').value = data.prix || '';
+                    document.getElementById('dish-category').value = data.categorie_id || '1';
                 })
                 .catch(error => {
-                    console.error('Erreur lors de la récupération des données du plat:', error);
+                    console.error('Erreur:', error);
                     alert('Erreur lors de la récupération des données du plat');
                 });
 
