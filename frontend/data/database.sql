@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `email` varchar(255) COLLATE utf8mb3_bin NOT NULL,
   `mot_de_passe` varchar(255) COLLATE utf8mb3_bin NOT NULL,
   `role` enum('client','admin') COLLATE utf8mb3_bin DEFAULT 'client',
+  `prenom` varchar(255) COLLATE utf8mb3_bin NOT NULL,
+  `adresse` varchar(255) COLLATE utf8mb3_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;

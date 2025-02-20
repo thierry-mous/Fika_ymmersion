@@ -29,9 +29,6 @@ app.use(session({
     }
 }));
 
-app.set('view engine', 'ejs'); // Assurez-vous d'avoir installé ejs avec npm
-app.set('views', path.join(__dirname, 'frontend/template')); // Chemin vers vos fichiers de template
-
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -51,8 +48,21 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-app.get('/index', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
+const fs = require('fs');
+
+app.get('/index', (req, res) => {
+    const isAdmin = req.session.role === 'admin';
+    fs.readFile(path.join(__dirname, 'frontend/template/index.html'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Erreur lors du chargement de la page');
+        }
+        const modifiedData = data.replace('<!-- ADMIN_LINK -->', isAdmin ? '<a href="/dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>' : '');
+        res.send(modifiedData);
+    });
+});
+
+app.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/dashboard.html'));
 });
 
 // Route pour la page de connexion
@@ -65,11 +75,9 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/register.html'));
 });
 
-
 app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/admin.html'));
 });
-
 
 // Route pour le panier (protégée)
 app.get('/order', isAuthenticated, (req, res) => {
@@ -149,8 +157,6 @@ app.post('/login', (req, res) => {
             req.session.role = results[0].role;
 
             // Envoyer un cookie de session
-            
-
             res.redirect('/index'); // Rediriger vers la page d'accueil
         } else {
             res.status(401).send('Identifiants incorrects. Veuillez réessayer.');
@@ -168,28 +174,20 @@ app.get('/logout', (req, res) => {
     });
 });
 
-app.post('/add-dish', isAuthenticated, (req, res) => {
-    const { name, description, price, category } = req.body;
+// Route pour la page de profil
+app.get('/profile', isAuthenticated, (req, res) => {
+    const userId = req.session.userId;
+    const query = 'SELECT nom, prenom FROM utilisateurs WHERE id = ?';
 
-    const query = 'INSERT INTO plats (nom, description, prix, categorie_id) VALUES (?, ?, ?, ?)';
-    db.query(query, [name, description, price, category], (err, result) => {
+    db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error('Erreur lors de l\'insertion :', err);
-            return res.status(500).send('Erreur lors de l\'ajout du plat');
+            return res.status(500).send('Erreur lors de la récupération des informations utilisateur');
         }
-        res.send({ message: 'Plat ajouté avec succès', id: result.insertId });
-    });
-});
-
-// Route pour récupérer les plats
-app.get('/get-dishes', (req, res) => {
-    const query = 'SELECT * FROM plats';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erreur lors de la récupération des plats :', err);
-            res.status(500).send('Erreur lors de la récupération des plats');
+        if (results.length > 0) {
+            const { nom, prenom } = results[0];
+            res.json({ nom, prenom });
         } else {
-            res.send(results);
+            res.status(404).send('Utilisateur non trouvé');
         }
     });
 });

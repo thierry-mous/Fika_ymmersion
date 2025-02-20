@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA - Statistiques</title>
+    <link rel="stylesheet" href="../asset/css/stats.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="back-button" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <h1>Statistiques</h1>
+            <div class="admin-info">
+                <span class="admin-name">Admin</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section des plats populaires -->
+        <section class="popular-dishes">
+            <div class="section-header">
+                <h2>Plats les plus vendus</h2>
+                <div class="period-selector">
+                    <select>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                        <option value="year">Cette année</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="top-dishes">
+                <!-- Top 1 -->
+                <div class="dish-card gold">
+                    <div class="rank"><i class="fas fa-crown"></i> #1</div>
+                    <img src="../asset/img/plat.png" alt="Poke Bowl Saumon">
+                    <div class="dish-info">
+                        <h3>Poke Bowl Saumon</h3>
+                        <p>Vendu 158 fois</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 2 -->
+                <div class="dish-card silver">
+                    <div class="rank">#2</div>
+                    <img src="../asset/img/salade.png" alt="Salade César">
+                    <div class="dish-info">
+                        <h3>Salade César</h3>
+                        <p>Vendu 132 fois</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 3 -->
+                <div class="dish-card bronze">
+                    <div class="rank">#3</div>
+                    <img src="../asset/img/plat.png" alt="Poke Végétarien">
+                    <div class="dish-info">
+                        <h3>Poke Végétarien</h3>
+                        <p>Vendu 98 fois</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section des statistiques détaillées -->
+        <section class="detailed-stats">
+            <div class="section-header">
+                <h2>Statistiques détaillées</h2>
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher un plat...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="stats-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plat</th>
+                            <th>Ventes</th>
+                            <th>Revenus</th>
+                            <th>Note moyenne</th>
+                            <th>Tendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="dish-cell">
+                                    <img src="../asset/img/plat.png" alt="Poke Bowl Saumon">
+                                    <span>Poke Bowl Saumon</span>
+                                </div>
+                            </td>
+                            <td>158</td>
+                            <td>2 370€</td>
+                            <td>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </td>
+                            <td class="trend-up"><i class="fas fa-arrow-up"></i> 12%</td>
+                        </tr>
+                        <!-- Autres lignes similaires... -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
