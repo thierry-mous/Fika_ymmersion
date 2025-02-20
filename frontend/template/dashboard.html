@@ -113,6 +113,10 @@
                         dishElement.innerHTML = `
                             <h3>${dish.nom}</h3>
                             <p>Prix: ${dish.prix} €</p>
+                            <div class="dish-buttons">
+                                <button class="btn-modifier" onclick="modifierPlat(${dish.id})">Modifier</button>
+                                <button class="btn-supprimer" onclick="supprimerPlat(${dish.id})">Supprimer</button>
+                            </div>
                         `;
                         dishesContainer.appendChild(dishElement);
                     });
