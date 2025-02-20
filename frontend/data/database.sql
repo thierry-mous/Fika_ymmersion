@@ -53,20 +53,10 @@ CREATE TABLE IF NOT EXISTS `plats` (
 
 INSERT INTO `categories` (`nom`) 
 VALUES 
-('Plat'), 
-('Entrée'), 
-('Dessert'), 
-('Boisson'), 
-('Snack'), 
-('Y-Plat'), 
-('Y-Entrée'), 
-
-
+('Salade Y-novante'), 
+('Plats chaud Y-novant'), 
 ('Y-Dessert'), 
-
-
-('Y-Boisson'),
-('Y-snack')
+('Y-snack');
 
 
 DROP TABLE IF EXISTS `statistiques`;

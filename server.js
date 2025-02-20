@@ -129,7 +129,6 @@ app.post('/form_register', (req, res) => {
                 </html>
             `);
         } else {
-            // Insérer l'utilisateur et rediriger vers la connexion
             db.query(insertUserSql, [email, password], (err, result) => {
                 if (err) {
                     return res.status(500).send(`
