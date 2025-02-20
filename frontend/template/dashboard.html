@@ -11,8 +11,10 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="back-button" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
+            <div class="back-button">
+                <a href="/index">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
             </div>
             <h1>Dashboard Admin</h1>
             <div class="admin-info">
@@ -28,10 +30,10 @@
                 <h2>Ajouter un nouveau plat</h2>
             </div>
             <div class="form-container">
-                <form id="add-dish-form" action="/add-dish" method="POST" enctype="multipart/form-data">
+                <form id="add-dish-form" action="http://localhost:3000/dashboard" method="POST">
                     <div class="form-group">
                         <label for="dish-name">Nom du plat</label>
-                        <input type="text" id="dish-name" name="name" placeholder="Ex: Poke Bowl Saumon" required>
+                        <input type="text" id="dish-name" name="nom" placeholder="Ex: Poke Bowl Saumon" required>
                     </div>
 
                     <div class="form-group">
@@ -42,27 +44,17 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="dish-price">Prix (€)</label>
-                            <input type="number" id="dish-price" name="price" placeholder="15.99" step="0.01" required>
+                            <input type="number" id="dish-price" name="prix" placeholder="15.99" step="0.01" required>
                         </div>
                         <div class="form-group">
                             <label for="dish-category">Catégorie</label>
-                            <select id="dish-category" name="category" required>
+                            <select id="dish-category" name="categorie_id" required>
                                 <option value="">Sélectionner</option>
-                                <option value="poke">Poke Bowl</option>
-                                <option value="salad">Salade</option>
-                                <option value="dessert">Dessert</option>
+                                <option value="1">Salade Y-novante</option>
+                                <option value="2">Y-snack</option>
+                                <option value="3">Plats chaud Y-novant</option>
+                                <option value="4">Y-Dessert</option>
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dish-image">Image du plat</label>
-                        <div class="file-input-container">
-                            <input type="file" id="dish-image" name="image" accept="image/*" required>
-                            <label for="dish-image" class="file-label">
-                                <i class="fas fa-upload"></i>
-                                <span>Choisir une image</span>
-                            </label>
                         </div>
                     </div>
 
@@ -84,29 +76,13 @@
             </div>
             
             <div class="dishes-grid" id="dishes-container">
-<<<<<<< HEAD
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nom</th>
-                            <th>Description</th>
-                            <th>Prix</th>
-                            <th>Catégorie</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dishes-list">
-                        <!-- Les plats seront affichés ici dynamiquement -->
-                    </tbody>
-                </table>
-=======
->>>>>>> 493878ecfd18289a58dd070349005204e8abb767
+                <!-- Les plats seront affichés ici -->
             </div>
         </section>
         <nav class="bottom-nav">
             <a href="../template/index.html" class="active">
                 <i class="fas fa-home"></i>
-                <span>Acceuil</span>
+                <span>Accueil</span>
             </a>
             <a href="../template/menu.html">
                 <i class="fas fa-utensils"></i>
@@ -120,14 +96,33 @@
                 <i class="fas fa-user"></i>
                 <span>Profil</span>
             </a>
+            <!-- ADMIN_LINK -->
         </nav>
     </main>
 
     <script src="../asset/js/admin.js"></script>
     <script>
-        function goBack() {
-            window.history.back();
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/api/plats')
+                .then(response => response.json())
+                .then(data => {
+                    const dishesContainer = document.getElementById('dishes-container');
+                    data.forEach(dish => {
+                        const dishElement = document.createElement('div');
+                        dishElement.classList.add('dish');
+                        dishElement.innerHTML = `
+                            <h3>${dish.nom}</h3>
+                            <p>Prix: ${dish.prix} €</p>
+                            <div class="dish-buttons">
+                                <button class="btn-modifier" onclick="modifierPlat(${dish.id})">Modifier</button>
+                                <button class="btn-supprimer" onclick="supprimerPlat(${dish.id})">Supprimer</button>
+                            </div>
+                        `;
+                        dishesContainer.appendChild(dishElement);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des plats:', error));
+        });
     </script>
 </body>
 </html>

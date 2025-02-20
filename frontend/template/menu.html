@@ -24,68 +24,40 @@
     <main>
         <h1>A la carte</h1>
         
-        <section class="menu-category">
+        <section class="menu-category" id="salades">
             <h2>Les salades Y-novantes</h2>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <a href="product.html">
-                        <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                        <div class="menu-info">
-                            <h3><a href="product.html">Poke Poulet</a></h3>
-                            <p class="price">€8.50</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="product.html">
-                        <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                        <div class="menu-info">
-                            <h3><a href="product.html">Poke Poulet</a></h3>
-                            <p class="price">€8.50</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="product.html">
-                        <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                        <div class="menu-info">
-                            <h3><a href="product.html">Poke Poulet</a></h3>
-                            <p class="price">€8.50</p>
-                        </div>
-                    </a>
-                </div>
+            <div class="menu-grid" id="salades-grid">
+                <!-- Les plats de la catégorie "Salades" seront affichés ici -->
             </div>
         </section>
 
-        <section class="menu-category">
+        <section class="menu-category" id="plats-chauds">
             <h2>Les plats chaud Y-novants</h2>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <a href="product.html">
-                        <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                        <div class="menu-info">
-                            <h3><a href="product.html">Poke Poulet</a></h3>
-                            <p class="price">€8.50</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="product.html">
-                        <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                        <div class="menu-info">
-                            <h3><a href="product.html">Poke Poulet</a></h3>
-                            <p class="price">€8.50</p>
-                        </div>
-                    </a>
-                </div>
+            <div class="menu-grid" id="plats-chauds-grid">
+                <!-- Les plats de la catégorie "Plats chauds" seront affichés ici -->
             </div>
         </section>
+
+        <section class="menu-category" id="desserts">
+            <h2>Les desserts Y-novants</h2>
+            <div class="menu-grid" id="desserts-grid">
+                <!-- Les plats de la catégorie "Desserts" seront affichés ici -->
+            </div>
+        </section>
+        <section class="menu-category" id="snack">
+            <h2>Les Snacks</h2>
+            <div class="menu-grid" id="snack-grid">
+                <!-- Les plats de la catégorie "Snacks" seront affichés ici -->
+            </div>
+
+
+
     </main>
 
     <nav class="bottom-nav">
         <a href="../template/index.html" class="active">
             <i class="fas fa-home"></i>
-            <span>Acceuil</span>
+            <span>Accueil</span>
         </a>
         <a href="../template/menu.html">
             <i class="fas fa-utensils"></i>
@@ -100,5 +72,50 @@
             <span>Profil</span>
         </a>
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/api/plats')
+                .then(response => response.json())
+                .then(data => {
+                    const saladesGrid = document.getElementById('salades-grid');
+                    const platsChaudsGrid = document.getElementById('plats-chauds-grid');
+                    const dessertsGrid = document.getElementById('desserts-grid');
+                    const snackGrid = document.getElementById('snack-grid');
+
+                    data.forEach(dish => {
+                        const dishElement = document.createElement('div');
+                        dishElement.classList.add('menu-item');
+                        dishElement.innerHTML = `
+                            <a href="product.html">
+                                <img src="../asset/img/pokepoulet.jpg" alt="${dish.nom}">
+                                <div class="menu-info">
+                                    <h3>${dish.nom}</h3>
+                                    <p class="price">€${dish.prix}</p>
+                                </div>
+                            </a>
+                        `;
+
+                        switch (dish.categorie_id) {
+                            case 1:
+                                saladesGrid.appendChild(dishElement);
+                                break;
+                            case 2:
+                                platsChaudsGrid.appendChild(dishElement);
+                                break;
+                            case 3:
+                                dessertsGrid.appendChild(dishElement);
+                                break;
+                            case 4:
+                                snackGrid.appendChild(dishElement);
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des plats:', error));
+        });
+    </script>
 </body>
 </html>
