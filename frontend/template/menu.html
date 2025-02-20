@@ -49,9 +49,7 @@
             <div class="menu-grid" id="snack-grid">
                 <!-- Les plats de la catégorie "Snacks" seront affichés ici -->
             </div>
-
-
-
+        </section>
     </main>
 
     <nav class="bottom-nav">
@@ -88,7 +86,7 @@
                         dishElement.classList.add('menu-item');
                         dishElement.innerHTML = `
                             <a href="product.html">
-                                <img src="../asset/img/pokepoulet.jpg" alt="${dish.nom}">
+                                <img src="../uploads/${dish.image}" alt="${dish.nom}">
                                 <div class="menu-info">
                                     <h3>${dish.nom}</h3>
                                     <p class="price">€${dish.prix}</p>

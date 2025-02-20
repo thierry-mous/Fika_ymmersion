@@ -5,6 +5,7 @@ const path = require('path');
 const authRoutes = require('./backend/src/routes/authRoutes.js');
 const dashboardRoutes = require('./backend/src/routes/dashboardRoutes.js'); 
 const cors = require('cors');
+const multer = require('multer');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
 const fs = require('fs');
@@ -44,6 +45,18 @@ db.connect(err => {
     }
     console.log('Connecté à la base de données MySQL');
 });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
@@ -172,17 +185,18 @@ app.get('/logout', (req, res) => {
     });
 });
 
-app.post('/dashboard', (req, res, next) => {
+app.post('/dashboard', upload.single('image'), (req, res, next) => {
     const { nom, description, prix, categorie_id } = req.body;
+    const image = req.file ? req.file.filename : null;
 
     // Vérification des données
-    if (!nom || !description || !prix || !categorie_id) {
+    if (!nom || !description || !prix || !categorie_id || !image) {
         return res.status(400).send('Tous les champs sont obligatoires');
     }
 
-    const query = 'INSERT INTO plats (nom, description, prix, categorie_id) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO plats (nom, description, prix, categorie_id, image) VALUES (?, ?, ?, ?, ?)';
 
-    db.query(query, [nom, description, prix, categorie_id], (err, result) => {
+    db.query(query, [nom, description, prix, categorie_id, image], (err, result) => {
         if (err) {
             console.error('Erreur SQL:', err); // Afficher l'erreur SQL complète
             return next(err); // Passer l'erreur au middleware de gestion des erreurs
@@ -190,6 +204,7 @@ app.post('/dashboard', (req, res, next) => {
         res.redirect('/dashboard'); // Rediriger vers le tableau de bord après l'ajout réussi
     });
 });
+
 
 app.get('/api/plats', (req, res) => {
     const query = 'SELECT * FROM plats';

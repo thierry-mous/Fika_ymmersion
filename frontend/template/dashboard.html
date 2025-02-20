@@ -30,7 +30,7 @@
                 <h2>Ajouter un nouveau plat</h2>
             </div>
             <div class="form-container">
-                <form id="add-dish-form" action="http://localhost:3000/dashboard" method="POST">
+                <form id="add-dish-form" action="http://localhost:3000/dashboard" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="dish-name">Nom du plat</label>
                         <input type="text" id="dish-name" name="nom" placeholder="Ex: Poke Bowl Saumon" required>
@@ -56,6 +56,11 @@
                                 <option value="4">Y-Dessert</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dish-image">Image</label>
+                        <input type="file" id="dish-image" name="image" accept="image/*" required>
                     </div>
 
                     <button type="submit" class="submit-button">
