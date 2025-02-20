@@ -58,6 +58,24 @@ VALUES
 ('Y-Dessert'), 
 ('Y-snack');
 
+INSERT INTO `plats` (`nom`, `description`, `prix`, `categorie_id`, `promotion`, `image`) 
+VALUES 
+('Salade César', 'Salade, poulet, parmesan, croutons, sauce César', 12.50, 1, 0, 'salade_cesar.jpg'),
+('Salade Niçoise', 'Salade, thon, œufs, olives, haricots verts, tomates', 13.00, 1, 0, 'salade_nicoise.jpg'),
+('Poke Bowl Saumon', 'Riz, saumon frais, avocat, concombre, edamame', 15.99, 1, 0, 'poke_saumon.jpg'),
+('Poke Bowl Poulet', 'Riz, poulet mariné, avocat, concombre, edamame', 14.99, 1, 0, 'poke_poulet.jpg'),
+('Burger Classique', 'Pain, steak haché, fromage, salade, tomate, sauce', 10.50, 2, 0, 'burger_classique.jpg'),
+('Burger Végétarien', 'Pain, galette de légumes, fromage, salade, tomate, sauce', 11.00, 2, 0, 'burger_vegetarien.jpg'),
+('Pizza Margherita', 'Tomate, mozzarella, basilic', 9.50, 2, 0, 'pizza_margherita.jpg'),
+('Pizza Reine', 'Tomate, mozzarella, jambon, champignons', 11.00, 2, 0, 'pizza_reine.jpg'),
+('Lasagnes', 'Pâtes, bœuf, tomate, béchamel, fromage', 12.00, 2, 0, 'lasagnes.jpg'),
+('Tiramisu', 'Café, mascarpone, cacao, biscuits', 6.50, 3, 0, 'tiramisu.jpg'),
+('Fondant au Chocolat', 'Chocolat, beurre, œufs, sucre, farine', 7.00, 3, 0, 'fondant_chocolat.jpg'),
+('Cheesecake', 'Fromage frais, biscuits, sucre, œufs', 6.50, 3, 0, 'cheesecake.jpg'),
+('Muffin Myrtille', 'Farine, sucre, œufs, myrtilles', 3.50, 4, 0, 'muffin_myrtille.jpg'),
+('Cookie Chocolat', 'Farine, sucre, œufs, pépites de chocolat', 2.50, 4, 0, 'cookie_chocolat.jpg'),
+('Brownie', 'Chocolat, beurre, œufs, sucre, farine', 3.00, 4, 0, 'brownie.jpg');
+
 
 DROP TABLE IF EXISTS `statistiques`;
 CREATE TABLE IF NOT EXISTS `statistiques` (

@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 body {
@@ -117,4 +118,11 @@ h2 {
 .logo img {
     height: 40px;
     width: auto;
+}
+
+h3 {
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+    
 }
