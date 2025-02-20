@@ -8,7 +8,7 @@ const platController = require('../controllers/platController');
 router.get('/plats/:id', platController.getPlat);
 
 // Route pour modifier un plat
-router.post('/plats/modifier', platController.modifierPlat);
+router.post('/plats/modifierplat', platController.modifierPlat);
 
 // Route pour ajouter un plat
 router.post('/ajouter-plat', platController.ajouterPlat);

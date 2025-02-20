@@ -29,6 +29,7 @@ const modifierPlat = (req, res) => {
         return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
     }
 
+    console.log('ID du plat:', id);
     // Conversion des types si nécessaire
     const platData = {
         id: parseInt(id),
