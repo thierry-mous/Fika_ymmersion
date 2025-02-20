@@ -11,6 +11,9 @@
 <body>
     <header>
         <div class="header-content">
+            <div class="back-button" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
             <h1>Dashboard Admin</h1>
             <div class="admin-info">
                 <span class="admin-name">Admin</span>
@@ -33,6 +36,7 @@
 
                     <div class="form-group">
                         <label for="dish-description">Description</label>
+                        <textarea id="dish-description" name="description" placeholder="Ex: Riz, saumon frais, avocat..." required></textarea>
                         <textarea id="dish-description" name="description" placeholder="Ex: Riz, saumon frais, avocat..." required></textarea>
                     </div>
 

@@ -65,6 +65,8 @@ header h1 {
     padding: 20px 15px;
     background: white;
     border: none;
+    cursor: pointer;
+    width: 100%;
     text-align: left;
     font-size: 16px;
     color: #333;
@@ -72,6 +74,23 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.historybtn {
+    width: 100%;
+    padding: 20px 15px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
 }
 
 .dropbtn::after {
@@ -138,3 +157,5 @@ header h1 {
     height: 40px;
     width: auto;
 } 
+
+

@@ -7,6 +7,7 @@ const dashboardRoutes = require('./backend/src/routes/dashboardRoutes.js');
 const cors = require('cors');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
+const fs = require('fs');
 
 const app = express();
 const port = 3000;

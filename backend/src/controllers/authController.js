@@ -67,6 +67,27 @@ class AuthController {
         }
     }
 
+// Exemple de validation avec un simple test
+async addDish(req, res) {
+    const { dishName, dishDescription, dishPrice, dishCategory } = req.body;
+
+    // Vérification de la présence de tous les champs nécessaires
+    if (!dishName || !dishDescription || !dishPrice || !dishCategory) {
+        return res.status(400).send('Tous les champs sont requis');
+    }
+
+    const insertDishSql = 'INSERT INTO plats (name, description, price, category) VALUES (?, ?, ?, ?)';
+
+    db.query(insertDishSql, [dishName, dishDescription, dishPrice, dishCategory], (err, result) => {
+        if (err) {
+            // Tu peux ajouter plus de détails sur l'erreur ici si nécessaire
+            return res.status(500).send(`Erreur lors de l'ajout du plat: ${err.message}`);
+        }
+        // Si la requête a réussi, tu peux rediriger l'utilisateur
+        res.redirect('/dashboard');
+    });
+}
+
     async index(req, res) {
         res.sendFile(path.join(__dirname, 'frontend/template/index.html'));
     }
