@@ -18,6 +18,25 @@ const ajouterPlat = (req, res) => {
     });
 };
 
-module.exports = {
-    ajouterPlat
+const modifierPlat = (req, res) => {
+    const { id, nom, description, prix, categorie, image } = req.body;
+
+    if (!id || !nom || !description || !prix || !categorie) {
+        return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
+    }
+
+    platModel.modifierPlat(id, nom, description, prix, categorie, image, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Une erreur est survenue lors de la modification du plat' });
+        }
+        res.status(200).json({ message: 'Plat modifié avec succès' });
+    });
 };
+
+// Exporter les deux fonctions dans un seul objet
+module.exports = {
+    ajouterPlat,
+    modifierPlat
+};
+
+

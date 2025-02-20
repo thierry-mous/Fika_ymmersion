@@ -7,4 +7,6 @@ const platController = require('../controllers/platController');
 // Route protégée pour ajouter un plat, accessible uniquement par un admin
 router.post('/ajouter-plat', platController.ajouterPlat);
 
+router.post('/modifier-plat', platController.modifierPlat);
+
 module.exports = router;

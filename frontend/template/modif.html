@@ -56,5 +56,21 @@
             </form>
         </div>
     </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const platId = urlParams.get('plats.id');
+
+        // Récupérer les données du plat à partir de l'API
+        fetch(`http://localhost:3000/api/plats/${platId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('dish-name').value = data.nom;
+                document.getElementById('dish-description').value = data.description;
+                document.getElementById('dish-price').value = data.prix;
+                document.getElementById('dish-category').value = data.categorie_id;
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données du plat:', error));
+    </script>
 </body>
 </html>

@@ -13,6 +13,18 @@ const ajouterPlat = (nom, description, prix, categorie, image, callback) => {
     });
 };
 
-module.exports = {
-    ajouterPlat
+const modifierPlat = (id, nom, description, prix, categorie, image, callback) => {
+    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie = ?, image = ? WHERE id = ?';
+    db.query(query, [nom, description, prix, categorie, image, id], (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result);
+    });
 };
+
+module.exports = {
+    ajouterPlat,
+    modifierPlat
+};
+
