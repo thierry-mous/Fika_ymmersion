@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('login-form');
-    console.log(form); // Vérifiez si cela affiche l'élément ou null
+    console.log(form);
 
     if (form) {
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche le rechargement de la page
+            event.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success) {
                     alert('Connexion réussie !');
-                    window.location.href = 'index.html'; // Remplacez par votre page d'accueil
+                    window.location.href = 'index.html';
                 } else {
                     alert('Identifiants incorrects. Veuillez réessayer.');
                 }

@@ -6,6 +6,7 @@ const authRoutes = require('./backend/src/routes/authRoutes.js'); // Assurez-vou
 const cors = require('cors');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,8 @@ app.use(session({
     }
 }));
 
+app.set('view engine', 'ejs'); // Assurez-vous d'avoir installé ejs avec npm
+app.set('views', path.join(__dirname, 'frontend/template')); // Chemin vers vos fichiers de template
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -155,9 +158,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-
-
-
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -165,6 +165,32 @@ app.get('/logout', (req, res) => {
         }
         res.clearCookie('connect.sid'); // Supprime le cookie de session (nom par défaut d'express-session)
         res.redirect('/login'); // Rediriger vers la page de connexion
+    });
+});
+
+app.post('/add-dish', isAuthenticated, (req, res) => {
+    const { name, description, price, category } = req.body;
+
+    const query = 'INSERT INTO plats (nom, description, prix, categorie_id) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, description, price, category], (err, result) => {
+        if (err) {
+            console.error('Erreur lors de l\'insertion :', err);
+            return res.status(500).send('Erreur lors de l\'ajout du plat');
+        }
+        res.send({ message: 'Plat ajouté avec succès', id: result.insertId });
+    });
+});
+
+// Route pour récupérer les plats
+app.get('/get-dishes', (req, res) => {
+    const query = 'SELECT * FROM plats';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des plats :', err);
+            res.status(500).send('Erreur lors de la récupération des plats');
+        } else {
+            res.send(results);
+        }
     });
 });
 
