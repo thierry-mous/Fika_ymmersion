@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="notifications-container">
+            <div class="notifications-container" id="notifications-container">
                 <!-- Notification Urgente -->
                 <div class="notification-card urgent">
                     <div class="notif-header">
@@ -61,7 +61,7 @@
                         <p>Les réservations pour la semaine prochaine sont maintenant ouvertes</p>
                     </div>
                     <div class="notif-actions">
-                        <button class="action-btn">Voir les réservations</button>
+                        <button class="action-btn" id="view-orders">Voir les réservations</button>
                         <button class="dismiss-btn"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
@@ -82,27 +82,69 @@
                     </div>
                 </div>
             </div>
-            <nav class="bottom-nav">
-                <a href="../template/index.html" class="active">
-                    <i class="fas fa-home"></i>
-                    <span>Acceuil</span>
-                </a>
-                <a href="../template/menu.html">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu</span>
-                </a>
-                <a href="../template/order.html">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Panier</span>
-                </a>
-                <a href="../template/profile.html">
-                    <i class="fas fa-user"></i>
-                    <span>Profil</span>
-                </a>
-            </nav>
+
+            <div class="orders-container" id="orders-container">
+                <!-- Les commandes seront affichées ici -->
+            </div>
         </section>
     </main>
 
-    <script src="../asset/js/notif.js"></script>
+    <nav class="bottom-nav">
+        <a href="../template/index.html" class="active">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="../template/menu.html">
+            <i class="fas fa-utensils"></i>
+            <span>Menu</span>
+        </a>
+        <a href="../template/order.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Panier</span>
+        </a>
+        <a href="../template/profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewOrdersButton = document.getElementById('view-orders');
+        const ordersContainer = document.getElementById('orders-container');
+    
+        viewOrdersButton.addEventListener('click', () => {
+            fetch('http://localhost:3000/api/orders')
+                .then(response => response.json())
+                .then(data => {
+                    ordersContainer.innerHTML = ''; // Clear previous orders
+    
+                    data.forEach(order => {
+                        const orderElement = document.createElement('div');
+                        orderElement.classList.add('order-card');
+                        orderElement.innerHTML = `
+                            <div class="order-header">
+                                <span class="order-id">Commande #${order.id}</span>
+                                <span class="order-date">${new Date(order.date_commande).toLocaleString()}</span>
+                            </div>
+                            <div class="order-content">
+                                <img src="../uploads/${order.image}" alt="${order.nom}">
+                                <div class="order-details">
+                                    <span class="product-name">${order.nom}</span>
+                                    <span class="quantity">Quantité: ${order.quantite}</span>
+                                    <span class="price">Prix: €${order.prix}</span>
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <span>Total: €${order.total}</span>
+                            </div>
+                        `;
+    
+                        ordersContainer.appendChild(orderElement);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des commandes:', error));
+        });
+    });
+</script>
 </body>
 </html>
