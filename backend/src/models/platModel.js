@@ -14,7 +14,7 @@ const ajouterPlat = (nom, description, prix, categorie, image, callback) => {
 };
 
 const modifierPlat = (id, nom, description, prix, categorie, callback) => {
-    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie = ? WHERE id = ?';
+    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie_id = ? WHERE id = ?';
     db.query(query, [nom, description, prix, categorie, id], (err, result) => {
         if (err) {
             console.error('Erreur SQL:', err);
