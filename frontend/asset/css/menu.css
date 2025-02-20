@@ -5,6 +5,10 @@
     text-decoration: none;
 }
 
+main {
+    margin: 70px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
