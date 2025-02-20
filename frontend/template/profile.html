@@ -27,7 +27,7 @@
         <div class="dropdown">
             <button class="dropbtn">Informations du compte</button>
             <div class="dropdown-content">
-                <p>Détails de votre compte ici...</p>
+                <p>Email: <span id="email"></span></p>
             </div>
         </div>
 
@@ -75,6 +75,7 @@
                 .then(data => {
                     document.getElementById('nom').textContent = data.nom;
                     document.getElementById('prenom').textContent = data.prenom;
+                    document.getElementById('email').textContent = data.email;
                 })
                 .catch(error => console.error('Erreur:', error));
         });
