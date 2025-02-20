@@ -122,14 +122,22 @@
                                 <a href="../template/modif.html?id=${dish.id}">
                                     <button class="btn-modifier">Modifier</button>
                                 </a>
-                                <button class="btn-supprimer" onclick="supprimerPlat(${dish.id})">Supprimer</button>
+                                <button id="delete-button-${dish.id}" class="btn-supprimer">Supprimer</button>
                             </div>
                         `;
                         dishesContainer.appendChild(dishElement);
+
+                        document.getElementById(`delete-button-${dish.id}`).addEventListener('click', async () => {
+                            const response = await fetch(`http://localhost:3000/api/dashboard/plats/supprimerplat/${dish.id}`, {
+                                method: 'DELETE'
+                            });
+                            console.log("suppression du plat");
+                        });
                     });
                 })
                 .catch(error => console.error('Erreur lors de la récupération des plats:', error));
         });
+
     </script>
 </body>
 </html>

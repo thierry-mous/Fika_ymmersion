@@ -34,9 +34,16 @@ const getPlat = (id, callback) => {
     });
 };
 
+const supprimerPlat = (id, callback) => {
+    const query = 'DELETE FROM plats WHERE id = ?';
+    db.query(query, [id], (err, result) => {
+        callback(err, result);
+    });
+};
 module.exports = {
     ajouterPlat,
     modifierPlat,
-    getPlat
+    getPlat,
+    supprimerPlat
 };
 

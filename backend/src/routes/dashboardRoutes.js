@@ -13,4 +13,6 @@ router.post('/plats/modifierplat', platController.modifierPlat);
 // Route pour ajouter un plat
 router.post('/ajouter-plat', platController.ajouterPlat);
 
+router.delete('/plats/supprimerplat/:id', platController.supprimerPlat);
+
 module.exports = router;
