@@ -294,7 +294,6 @@ app.get('/api/cart', (req, res) => {
     });
 });
 
-// Middleware pour gérer les erreurs
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Quelque chose a mal tourné!');

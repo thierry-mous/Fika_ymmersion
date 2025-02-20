@@ -82,6 +82,9 @@
                             <span class="quantity">Quantity: ${item.quantite}</span>
                         </div>
                         <span class="price">€${item.prix}</span>
+                        <button class="btn-delete" onclick="supprimerDuPanier(${item.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
                     `;
 
                     cartItemsContainer.appendChild(cartItemElement);
@@ -96,6 +99,34 @@
             })
             .catch(error => console.error('Erreur lors de la récupération du panier:', error));
     });
-    </script>
+
+    async function supprimerDuPanier(itemId) {
+    if (!itemId) {
+        console.error('Aucun ID d\'article fourni pour la suppression.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/panier/supprimer/${itemId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur lors de la suppression de l'article : ${response.statusText}`);
+        }
+
+        // Supprime l'article du DOM
+        const itemElement = document.getElementById(`cart-item-${itemId}`);
+        if (itemElement) {
+            itemElement.remove();
+            console.log(`Élément avec ID ${itemId} supprimé.`);
+        } else {
+            console.warn(`Élément DOM introuvable avec l'ID cart-item-${itemId}.`);
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+}</script>
+
 </body>
 </html>
