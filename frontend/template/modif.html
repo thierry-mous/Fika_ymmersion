@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA - Modifier un plat</title>
+    <link rel="stylesheet" href="../asset/css/modif.css">
+    <link rel="stylesheet" href="../asset/css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="back-button">
+                <a href="/dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+            <h1>Modifier le plat</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form id="modify-dish-form">
+                <div class="form-group">
+                    <label for="dish-name">Nom du plat</label>
+                    <input type="text" id="dish-name" name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dish-description">Description</label>
+                    <textarea id="dish-description" name="description" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dish-price">Prix (€)</label>
+                        <input type="number" id="dish-price" name="prix" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-category">Catégorie</label>
+                        <select id="dish-category" name="categorie_id" required>
+                            <option value="1">Salade Y-novante</option>
+                            <option value="2">Y-snack</option>
+                            <option value="3">Plats chaud Y-novant</option>
+                            <option value="4">Y-Dessert</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-save"></i>
+                    Enregistrer les modifications
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
