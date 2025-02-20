@@ -235,6 +235,65 @@ app.get('/profile', isAuthenticated, (req, res) => {
     });
 });
 
+app.get('/api/plats/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM plats WHERE id = ?';
+
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).send('Erreur lors de la récupération du plat');
+        }
+        if (results.length > 0) {
+            res.json(results[0]);
+        } else {
+            res.status(404).send('Plat non trouvé');
+        }
+    });
+});
+
+app.post('/api/cart', (req, res) => {
+    const { id } = req.body;
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour ajouter un plat au panier' });
+    }
+
+    const query = 'INSERT INTO panier (utilisateur_id, plat_id, quantite) VALUES (?, ?, 1)';
+
+    db.query(query, [userId, id], (err, result) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de l\'ajout au panier' });
+        }
+        res.status(200).json({ message: 'Plat ajouté au panier' });
+    });
+});
+
+app.get('/api/cart', (req, res) => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour voir votre panier' });
+    }
+
+    const query = `
+        SELECT p.nom, p.description, p.prix, p.image, c.quantite
+        FROM panier c
+        JOIN plats p ON c.plat_id = p.id
+        WHERE c.utilisateur_id = ?
+    `;
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération du panier' });
+        }
+        res.json(results);
+    });
+});
+
 // Middleware pour gérer les erreurs
 app.use((err, req, res, next) => {
     console.error(err.stack);

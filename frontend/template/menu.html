@@ -85,13 +85,14 @@
                         const dishElement = document.createElement('div');
                         dishElement.classList.add('menu-item');
                         dishElement.innerHTML = `
-                            <a href="product.html">
+                            <a href="product.html?id=${dish.id}">
                                 <img src="../uploads/${dish.image}" alt="${dish.nom}">
                                 <div class="menu-info">
                                     <h3>${dish.nom}</h3>
                                     <p class="price">€${dish.prix}</p>
                                 </div>
                             </a>
+                            <button class="add-to-cart" data-id="${dish.id}">Ajouter au panier</button>
                         `;
 
                         switch (dish.categorie_id) {
@@ -110,6 +111,24 @@
                             default:
                                 break;
                         }
+                    });
+
+                    document.querySelectorAll('.add-to-cart').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            const dishId = event.target.getAttribute('data-id');
+                            fetch('http://localhost:3000/api/cart', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ id: dishId })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                alert('Plat ajouté au panier');
+                            })
+                            .catch(error => console.error('Erreur lors de l\'ajout au panier:', error));
+                        });
                     });
                 })
                 .catch(error => console.error('Erreur lors de la récupération des plats:', error));

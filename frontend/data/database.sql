@@ -107,3 +107,12 @@ COMMIT;
   INSERT INTO `utilisateurs` (`nom`, `email`, `mot_de_passe`, `role`) 
   VALUES ('Admin', 'admin@example.com', 'adminpassword', 'admin');
 
+CREATE TABLE IF NOT EXISTS `panier` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `utilisateur_id` int NOT NULL,
+    `plat_id` int NOT NULL,
+    `quantite` int NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs`(`id`),
+    FOREIGN KEY (`plat_id`) REFERENCES `plats`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
