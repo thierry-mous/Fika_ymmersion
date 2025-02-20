@@ -49,8 +49,6 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-// Route pour la page d'accueil
-const fs = require('fs');
 
 app.get('/index', (req, res) => {
     const isAdmin = req.session.role === 'admin';

@@ -11,8 +11,10 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="back-button" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
+            <div class="back-button">
+                <a href="/index">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
             </div>
             <h1>Dashboard Admin</h1>
             <div class="admin-info">
@@ -36,7 +38,6 @@
 
                     <div class="form-group">
                         <label for="dish-description">Description</label>
-                        <textarea id="dish-description" name="description" placeholder="Ex: Riz, saumon frais, avocat..." required></textarea>
                         <textarea id="dish-description" name="description" placeholder="Ex: Riz, saumon frais, avocat..." required></textarea>
                     </div>
 
@@ -75,6 +76,7 @@
             </div>
             
             <div class="dishes-grid" id="dishes-container">
+                <!-- Les plats seront affichés ici -->
             </div>
         </section>
         <nav class="bottom-nav">
@@ -94,8 +96,7 @@
                 <i class="fas fa-user"></i>
                 <span>Profil</span>
             </a>
-                    <!-- ADMIN_LINK -->
-
+            <!-- ADMIN_LINK -->
         </nav>
     </main>
 
@@ -119,6 +120,5 @@
                 .catch(error => console.error('Erreur lors de la récupération des plats:', error));
         });
     </script>
-    
 </body>
 </html>
