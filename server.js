@@ -220,15 +220,15 @@ app.get('/api/plats', (req, res) => {
 // Route pour la page de profil
 app.get('/profile', isAuthenticated, (req, res) => {
     const userId = req.session.userId;
-    const query = 'SELECT nom, prenom FROM utilisateurs WHERE id = ?';
+    const query = 'SELECT nom, prenom, email FROM utilisateurs WHERE id = ?';
 
     db.query(query, [userId], (err, results) => {
         if (err) {
             return res.status(500).send('Erreur lors de la récupération des informations utilisateur');
         }
         if (results.length > 0) {
-            const { nom, prenom } = results[0];
-            res.json({ nom, prenom });
+            const { nom, prenom, email } = results[0];
+            res.json({ nom, prenom, email });
         } else {
             res.status(404).send('Utilisateur non trouvé');
         }
@@ -251,6 +251,35 @@ app.get('/api/plats/:id', (req, res) => {
         }
     });
 });
+
+app.delete('/api/cart/delete/:id', (req, res) => {
+    const { id } = req.params;
+    const userId = req.session.userId;
+
+    console.log("suppression du plat");
+    console.log(id);
+    console.log(userId);
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour supprimer un plat du panier' });
+    }
+
+    const query = 'DELETE FROM panier WHERE plat_id = ? AND utilisateur_id = ?';
+
+    db.query(query, [id, userId], (err, result) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la suppression du plat du panier' });
+        }
+        res.status(200).json({ message: 'Plat supprimé du panier', result: result });
+    });
+});
+
+
+
+
+
+
 
 app.post('/api/cart', (req, res) => {
     const { id } = req.body;
@@ -279,7 +308,7 @@ app.get('/api/cart', (req, res) => {
     }
 
     const query = `
-        SELECT p.nom, p.description, p.prix, p.image, c.quantite
+        SELECT p.id, p.nom, p.description, p.prix, p.image, c.quantite
         FROM panier c
         JOIN plats p ON c.plat_id = p.id
         WHERE c.utilisateur_id = ?
@@ -294,8 +323,6 @@ app.get('/api/cart', (req, res) => {
     });
 });
 
-<<<<<<< HEAD
-=======
 app.post('/api/order', (req, res) => {
     const userId = req.session.userId;
 
@@ -368,7 +395,6 @@ app.post('/api/order', (req, res) => {
 
 
 // Middleware pour gérer les erreurs
->>>>>>> 11710455a96eeb4eb4de8a357460466214ee04ba
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Quelque chose a mal tourné!');

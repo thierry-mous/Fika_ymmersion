@@ -92,7 +92,7 @@ const supprimerPlat = (req, res) => {
         }
     });
 };  
-// Exporter les trois fonctions dans un seul objet
+
 module.exports = {
     ajouterPlat,
     modifierPlat,

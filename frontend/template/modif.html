@@ -123,14 +123,7 @@
                 }
             });
         });
-        document.getElementById('delete-button').addEventListener('click', async () => {
-            const response = await fetch(`http://localhost:3000/api/dashboard/plats/supprimerplat/${platId}`, {
-                method: 'DELETE'
-            });
-            if (!response.ok) throw new Error('Erreur lors de la suppression');
-            alert('Plat supprimé avec succès');
-            history.back();
-        });
+
     </script>
 </body> 
 </html>

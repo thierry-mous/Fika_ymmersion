@@ -63,6 +63,7 @@
         fetch('http://localhost:3000/api/cart')
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 const cartItemsContainer = document.getElementById('cart-items');
                 const itemCountElement = document.getElementById('item-count');
                 const subtotalElement = document.getElementById('subtotal');
@@ -100,15 +101,16 @@
             .catch(error => console.error('Erreur lors de la récupération du panier:', error));
     });
 
-<<<<<<< HEAD
     async function supprimerDuPanier(itemId) {
+        console.log("suppression du plat");
+        console.log(itemId);
     if (!itemId) {
         console.error('Aucun ID d\'article fourni pour la suppression.');
         return;
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/panier/supprimer/${itemId}`, {
+        const response = await fetch(`http://localhost:3000/api/cart/delete/${itemId}`, {
             method: 'DELETE',
         });
 
@@ -116,37 +118,15 @@
             throw new Error(`Erreur lors de la suppression de l'article : ${response.statusText}`);
         }
 
+        console.log("suppression du plat");
+        console.log(response);
+
         // Supprime l'article du DOM
-        const itemElement = document.getElementById(`cart-item-${itemId}`);
-        if (itemElement) {
-            itemElement.remove();
-            console.log(`Élément avec ID ${itemId} supprimé.`);
-        } else {
-            console.warn(`Élément DOM introuvable avec l'ID cart-item-${itemId}.`);
-        }
+        window.location.reload();
     } catch (error) {
         console.error(error.message);
     }
 }</script>
 
-=======
-    document.getElementById('place-order').addEventListener('click', () => {
-        fetch('http://localhost:3000/api/order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            if (data.message === 'Commande passée avec succès') {
-                window.location.href = '/index';
-            }
-        })
-        .catch(error => console.error('Erreur lors de la passation de la commande:', error));
-    });
-    </script>
->>>>>>> 11710455a96eeb4eb4de8a357460466214ee04ba
 </body>
 </html>
