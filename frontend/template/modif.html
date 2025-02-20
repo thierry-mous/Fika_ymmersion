@@ -106,7 +106,7 @@
                 console.log('Données envoyées:', formData);
 
                 try {
-                    const response = await fetch('http://localhost:3000/api/dashboard/modifier-plat', {
+                    const response = await fetch('http://localhost:3000/api/dashboard/plats/modifier', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -114,16 +114,12 @@
                         body: JSON.stringify(formData)
                     });
 
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || 'Erreur lors de la modification');
-                    }
+                    if (!response.ok) throw new Error('Erreur lors de la modification');
 
                     alert('Plat modifié avec succès');
                     history.back();
                 } catch (error) {
-                    console.error('Erreur:', error);
-                    alert('Erreur lors de la modification du plat: ' + error.message);
+                    alert('Erreur lors de la modification du plat');
                 }
             });
         });
