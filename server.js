@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
-const authRoutes = require('./backend/src/routes/authRoutes.js'); // Assurez-vous que le chemin est correct
+const authRoutes = require('./backend/src/routes/authRoutes.js');
+const dashboardRoutes = require('./backend/src/routes/dashboardRoutes.js'); 
 const cors = require('cors');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
@@ -45,6 +46,7 @@ db.connect(err => {
 
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Route pour la page d'accueil
 const fs = require('fs');
@@ -101,7 +103,6 @@ app.post('/form_register', (req, res) => {
             `);
         }
         if (results.length > 0) {
-            // Email déjà utilisé : on renvoie le formulaire avec un message d'erreur
             return res.send(`
                 <!DOCTYPE html>
                 <html lang="fr">
@@ -121,7 +122,7 @@ app.post('/form_register', (req, res) => {
                             <button type="submit">S'inscrire</button>
                         </form>
                         <p style="color:red;">Email déjà utilisé</p>
-                        <p>Déjà un compte ? <a href="/login">Connectez-vous ici</a></p>
+                        <p>Déjà un compte ? <a href="/login">Connectez-vous ici</a>
                     </main>
                 </body>
                 </html>
@@ -173,6 +174,37 @@ app.get('/logout', (req, res) => {
     });
 });
 
+app.post('/dashboard', (req, res, next) => {
+    const { nom, description, prix, categorie_id } = req.body;
+
+    // Vérification des données
+    if (!nom || !description || !prix || !categorie_id) {
+        return res.status(400).send('Tous les champs sont obligatoires');
+    }
+
+    const query = 'INSERT INTO plats (nom, description, prix, categorie_id) VALUES (?, ?, ?, ?)';
+
+    db.query(query, [nom, description, prix, categorie_id], (err, result) => {
+        if (err) {
+            console.error('Erreur SQL:', err); // Afficher l'erreur SQL complète
+            return next(err); // Passer l'erreur au middleware de gestion des erreurs
+        }
+        res.redirect('/dashboard'); // Rediriger vers le tableau de bord après l'ajout réussi
+    });
+});
+
+app.get('/api/plats', (req, res) => {
+    const query = 'SELECT * FROM plats';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).send('Erreur lors de la récupération des plats');
+        }
+        res.json(results);
+    });
+});
+
 // Route pour la page de profil
 app.get('/profile', isAuthenticated, (req, res) => {
     const userId = req.session.userId;
@@ -189,6 +221,12 @@ app.get('/profile', isAuthenticated, (req, res) => {
             res.status(404).send('Utilisateur non trouvé');
         }
     });
+});
+
+// Middleware pour gérer les erreurs
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Quelque chose a mal tourné!');
 });
 
 // Démarrer le serveur

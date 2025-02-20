@@ -46,10 +46,27 @@ CREATE TABLE IF NOT EXISTS `plats` (
   `prix` decimal(10,2) NOT NULL,
   `categorie_id` int DEFAULT NULL,
   `promotion` tinyint(1) DEFAULT '0',
+  `image` varchar(255) COLLATE utf8mb3_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categorie_id` (`categorie_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
+INSERT INTO `categories` (`nom`) 
+VALUES 
+('Plat'), 
+('Entrée'), 
+('Dessert'), 
+('Boisson'), 
+('Snack'), 
+('Y-Plat'), 
+('Y-Entrée'), 
+
+
+('Y-Dessert'), 
+
+
+('Y-Boisson'),
+('Y-snack')
 
 
 DROP TABLE IF EXISTS `statistiques`;
