@@ -79,11 +79,25 @@ const getPlat = (req, res) => {
     });
 };
 
+const supprimerPlat = (req, res) => {
+    const id = req.params.id;
+
+    if (!id) {
+        return res.status(400).json({ error: 'ID du plat requis' });
+    }
+
+    platModel.supprimerPlat(id, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la suppression du plat' });
+        }
+    });
+};  
 // Exporter les trois fonctions dans un seul objet
 module.exports = {
     ajouterPlat,
     modifierPlat,
-    getPlat
+    getPlat,
+    supprimerPlat
 };
 
 
