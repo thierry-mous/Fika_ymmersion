@@ -13,6 +13,30 @@ const ajouterPlat = (nom, description, prix, categorie, image, callback) => {
     });
 };
 
-module.exports = {
-    ajouterPlat
+const modifierPlat = (id, nom, description, prix, categorie, callback) => {
+    const query = 'UPDATE plats SET nom = ?, description = ?, prix = ?, categorie = ? WHERE id = ?';
+    db.query(query, [nom, description, prix, categorie, id], (err, result) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return callback(err, null);
+        }
+        callback(null, result);
+    });
 };
+
+const getPlat = (id, callback) => {
+    const query = 'SELECT * FROM plats WHERE id = ?';
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result[0]); // Retourne le premier résultat
+    });
+};
+
+module.exports = {
+    ajouterPlat,
+    modifierPlat,
+    getPlat
+};
+

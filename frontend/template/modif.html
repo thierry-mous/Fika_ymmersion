@@ -56,5 +56,77 @@
             </form>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const platId = urlParams.get('id');
+
+            console.log('ID du plat:', platId);
+
+            if (!platId) {
+                alert('Aucun ID de plat spécifié');
+                history.back();
+                return;
+            }
+
+            fetch(`http://localhost:3000/api/dashboard/plats/${platId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Données reçues:', data);
+                    if (!data) {
+                        throw new Error('Aucune donnée reçue');
+                    }
+                    document.getElementById('dish-name').value = data.nom || '';
+                    document.getElementById('dish-description').value = data.description || '';
+                    document.getElementById('dish-price').value = data.prix || '';
+                    document.getElementById('dish-category').value = data.categorie_id || '1';
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la récupération des données du plat');
+                });
+
+            document.getElementById('modify-dish-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    id: parseInt(platId),
+                    nom: document.getElementById('dish-name').value,
+                    description: document.getElementById('dish-description').value,
+                    prix: parseFloat(document.getElementById('dish-price').value),
+                    categorie: parseInt(document.getElementById('dish-category').value)
+                };
+
+                console.log('Données envoyées:', formData);
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/dashboard/modifier-plat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Erreur lors de la modification');
+                    }
+
+                    alert('Plat modifié avec succès');
+                    history.back();
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la modification du plat: ' + error.message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
