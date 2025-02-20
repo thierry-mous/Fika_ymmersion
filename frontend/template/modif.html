@@ -72,7 +72,7 @@
             }
 
             // Récupérer les données du plat
-            fetch(`http://localhost:3000/api/plats/${platId}`)
+            fetch(`http://localhost:3000/api/dashboard/plats/${platId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -107,7 +107,7 @@
                 };
 
                 try {
-                    const response = await fetch('http://localhost:3000/api/plats/modifier', {
+                    const response = await fetch('http://localhost:3000/api/dashboard/modifier-plat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
