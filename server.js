@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
-const authRoutes = require('./backend/src/routes/authRoutes.js'); // Assurez-vous que le chemin est correct
+const authRoutes = require('./backend/src/routes/authRoutes.js');
 const cors = require('cors');
 const session = require('express-session');
-const { isAuthenticated, isAdmin } = require('./middleware'); // Importer le middleware
+const { isAuthenticated, isAdmin } = require('./middleware');
 const fs = require('fs');
 
 const app = express();
@@ -17,15 +17,14 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware pour les sessions
 app.use(session({
-    secret: 'votre_secret', // Changez cela pour une valeur secrète
+    secret: 'votre_secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
         secure: false, // true si HTTPS
         httpOnly: true, // Empêche l'accès au cookie via JS côté client
-        maxAge: 1000 * 60 * 60 * 24 // Durée de vie du cookie (1 jour ici)
+        maxAge: 1000 * 60 * 60 * 24
     }
 }));
 
@@ -48,7 +47,6 @@ db.connect(err => {
 app.use('/api/auth', authRoutes);
 
 // Route pour la page d'accueil
-const fs = require('fs');
 
 app.get('/index', (req, res) => {
     const isAdmin = req.session.role === 'admin';
