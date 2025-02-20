@@ -23,8 +23,19 @@ const modifierPlat = (id, nom, description, prix, categorie, image, callback) =>
     });
 };
 
+const getPlat = (id, callback) => {
+    const query = 'SELECT * FROM plats WHERE id = ?';
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result[0]); // Retourne le premier résultat
+    });
+};
+
 module.exports = {
     ajouterPlat,
-    modifierPlat
+    modifierPlat,
+    getPlat
 };
 
