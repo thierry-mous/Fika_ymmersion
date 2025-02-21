@@ -24,25 +24,25 @@
         <section class="categories">
             <div class="categories-scroll">
                 <div class="category-item">
-                    <a href="menu.html?category=${category.id}">
+                    <a href="menu.html?category=plat-chaud">
                         <img src="../asset/img/plat.png" alt="plat chaud">
                         <span>plat chaud Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=${category.id}">
+                    <a href="menu.html?category=sandwich">
                         <img src="../asset/img/sandwich.png" alt="sandwich">
                         <span>Y-snak</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=${category.id}">
+                    <a href="menu.html?category=salade">
                         <img src="../asset/img/salade.png" alt="Salade">
                         <span>Salade Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=${category.id}">
+                    <a href="menu.html?category=dessert">
                         <img src="../asset/img/dessert.png" alt="Dessert">
                         <span>Y-Dessert</span>
                     </a>
@@ -76,7 +76,7 @@
     <nav class="bottom-nav">
         <a href="../template/index.html" class="active">
             <i class="fas fa-home"></i>
-            <span>Acceuil</span>
+            <span>Accueil</span>
         </a>
         <a href="../template/menu.html">
             <i class="fas fa-utensils"></i>
@@ -110,9 +110,7 @@
                                 <div class="menu-info">
                                     <h3>${plat.nom}</h3>
                                     <p class="description">${plat.description}</p>
-                                    <p class="price">Prix original: €${plat.prix.toFixed(2)}</p>
-                                    <p class="promotion">Promotion: ${plat.promotion}%</p>
-                                    <p class="current-price">Prix actuel: €${prixActuel.toFixed(2)}</p>
+                                    <p class="current-price">Prix: €${prixActuel.toFixed(2)}</p>
                                 </div>
                             </a>
                         `;

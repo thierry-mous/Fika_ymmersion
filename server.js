@@ -60,7 +60,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api', categoryRoutes);
 
 
 app.get('/index', (req, res) => {
@@ -482,8 +481,14 @@ app.get('/api/order-history', (req, res) => {
         if (err) {
             console.error('Erreur SQL:', err);
             return res.status(500).json({ message: 'Erreur lors de la récupération de l\'historique des commandes' });
-// Route pour obtenir les plats par catégorie
-app.get('/api/categories', (req, res) => {
+        }
+        res.json(results);
+    });
+});
+
+
+
+    app.get('/api/categories', (req, res) => {
     const query = 'SELECT * FROM categories';
     
     db.query(query, (err, results) => {
@@ -550,7 +555,4 @@ app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
 
-const express = require('express');
-const router = express.Router();
-const db = require('../config/db');
 
