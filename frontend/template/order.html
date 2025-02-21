@@ -39,11 +39,11 @@
         <div class="summary">
             <div class="summary-line">
                 <span>Subtotal (<span id="item-count">0</span>)</span>
-                <span id="subtotal">$0.00</span>
+                <span id="subtotal">€0.00</span>
             </div>
             <div class="summary-line total">
                 <span>Total</span>
-                <span id="total">$0.00</span>
+                <span id="total">€0.00</span>
             </div>
         </div>
     </main>
@@ -62,48 +62,52 @@
     document.addEventListener('DOMContentLoaded', () => {
         fetch('http://localhost:3000/api/cart')
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const cartItemsContainer = document.getElementById('cart-items');
-                const itemCountElement = document.getElementById('item-count');
-                const subtotalElement = document.getElementById('subtotal');
-                const totalElement = document.getElementById('total');
+            .then(cartData => {
+                fetch('http://localhost:3000/api/promotions')
+                    .then(response => response.json())
+                    .then(promotionsData => {
+                        const cartItemsContainer = document.getElementById('cart-items');
+                        const itemCountElement = document.getElementById('item-count');
+                        const subtotalElement = document.getElementById('subtotal');
+                        const totalElement = document.getElementById('total');
 
-                let itemCount = 0;
-                let subtotal = 0;
+                        let itemCount = 0;
+                        let subtotal = 0;
 
-                data.forEach(item => {
-                    const cartItemElement = document.createElement('div');
-                    cartItemElement.classList.add('cart-item');
-                    cartItemElement.innerHTML = `
-                        <img src="../uploads/${item.image}" alt="${item.nom}">
-                        <div class="item-details">
-                            <span class="product-name">${item.nom}</span>
-                            <span class="description">${item.description}</span>
-                            <span class="quantity">Quantity: ${item.quantite}</span>
-                        </div>
-                        <span class="price">€${item.prix}</span>
-                        <button class="btn-delete" onclick="supprimerDuPanier(${item.id})">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
+                        cartData.forEach(item => {
+                            const promotion = promotionsData.find(promo => promo.id === item.id);
+                            const prixActuel = promotion ? item.prix - (item.prix * promotion.promotion / 100) : item.prix;
+                            const cartItemElement = document.createElement('div');
+                            cartItemElement.classList.add('cart-item');
+                            cartItemElement.innerHTML = `
+                                <img src="../uploads/${item.image}" alt="${item.nom}">
+                                <div class="item-details">
+                                    <span class="product-name">${item.nom}</span>
+                                    <span class="description">${item.description}</span>
+                                    <span class="quantity">Quantity: ${item.quantite}</span>
+                                </div>
+                                <span class="price">€${prixActuel.toFixed(2)}</span>
+                                <button class="btn-delete" onclick="supprimerDuPanier(${item.id})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            `;
 
-                    cartItemsContainer.appendChild(cartItemElement);
+                            cartItemsContainer.appendChild(cartItemElement);
 
-                    itemCount += item.quantite;
-                    subtotal += item.prix * item.quantite;
-                });
+                            itemCount += item.quantite;
+                            subtotal += prixActuel * item.quantite;
+                        });
 
-                itemCountElement.textContent = itemCount;
-                subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
-                totalElement.textContent = `€${subtotal.toFixed(2)}`;
+                        itemCountElement.textContent = itemCount;
+                        subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+                        totalElement.textContent = `€${subtotal.toFixed(2)}`;
+                    })
+                    .catch(error => console.error('Erreur lors de la récupération des promotions:', error));
             })
             .catch(error => console.error('Erreur lors de la récupération du panier:', error));
     });
 
     async function supprimerDuPanier(itemId) {
-        console.log("suppression du plat");
-        console.log(itemId);
         if (!itemId) {
             console.error('Aucun ID d\'article fourni pour la suppression.');
             return;
@@ -117,9 +121,6 @@
             if (!response.ok) {
                 throw new Error(`Erreur lors de la suppression de l'article : ${response.statusText}`);
             }
-
-            console.log("suppression du plat");
-            console.log(response);
 
             // Supprime l'article du DOM
             window.location.reload();
