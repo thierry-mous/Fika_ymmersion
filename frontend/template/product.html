@@ -55,11 +55,13 @@
                 .then(response => response.json())
                 .then(dish => {
                     const productDetails = document.getElementById('product-details');
+                    const prixActuel = dish.prix - (dish.prix * dish.promotion / 100);
+
                     productDetails.innerHTML = `
                         <h1>${dish.nom}</h1>
                         <img src="../uploads/${dish.image}" alt="${dish.nom}">
                         <p>${dish.description}</p>
-                        <p>Prix: €${dish.prix}</p>
+                        <p>Prix: €${prixActuel.toFixed(2)}</p>
                         <button class="add-to-cart" data-id="${dish.id}">Ajouter au panier</button>
                     `;
 
