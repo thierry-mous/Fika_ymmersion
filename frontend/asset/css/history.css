@@ -95,19 +95,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
   
-  .btn-delete {
-      background: none;
-      border: none;
-      color: #ff4757;
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
+
   
   .btn-delete:hover {
       background: rgba(255, 71, 87, 0.1);
@@ -142,7 +130,7 @@
   .btn-terminer {
     background: none;
     border: none;
-    color: #218838;
+    color: #097D4C;
     cursor: pointer;
     width: 32px;
     height: 32px;
@@ -154,11 +142,11 @@
   }
   
   .btn-terminer:hover {
-      background-color: #218838;
+      background-color: #097D4C;
   }
 
   .btn-terminer i {
-    color: #218838;
+    color: #097D4C;
   }
 
   .btn-terminer:hover i {
