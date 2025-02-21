@@ -252,6 +252,35 @@ app.get('/api/plats/:id', (req, res) => {
     });
 });
 
+app.delete('/api/cart/delete/:id', (req, res) => {
+    const { id } = req.params;
+    const userId = req.session.userId;
+
+    console.log("suppression du plat");
+    console.log(id);
+    console.log(userId);
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour supprimer un plat du panier' });
+    }
+
+    const query = 'DELETE FROM panier WHERE plat_id = ? AND utilisateur_id = ?';
+
+    db.query(query, [id, userId], (err, result) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la suppression du plat du panier' });
+        }
+        res.status(200).json({ message: 'Plat supprimé du panier', result: result });
+    });
+});
+
+
+
+
+
+
+
 app.post('/api/cart', (req, res) => {
     const { id } = req.body;
     const userId = req.session.userId;
@@ -279,7 +308,7 @@ app.get('/api/cart', (req, res) => {
     }
 
     const query = `
-        SELECT p.nom, p.description, p.prix, p.image, c.quantite
+        SELECT p.id, p.nom, p.description, p.prix, p.image, c.quantite
         FROM panier c
         JOIN plats p ON c.plat_id = p.id
         WHERE c.utilisateur_id = ?

@@ -40,6 +40,7 @@ const supprimerPlat = (id, callback) => {
         callback(err, result);
     });
 };
+
 module.exports = {
     ajouterPlat,
     modifierPlat,

@@ -63,6 +63,7 @@
         fetch('http://localhost:3000/api/cart')
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 const cartItemsContainer = document.getElementById('cart-items');
                 const itemCountElement = document.getElementById('item-count');
                 const subtotalElement = document.getElementById('subtotal');
@@ -82,6 +83,9 @@
                             <span class="quantity">Quantity: ${item.quantite}</span>
                         </div>
                         <span class="price">€${item.prix}</span>
+                        <button class="btn-delete" onclick="supprimerDuPanier(${item.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
                     `;
 
                     cartItemsContainer.appendChild(cartItemElement);
@@ -97,22 +101,32 @@
             .catch(error => console.error('Erreur lors de la récupération du panier:', error));
     });
 
-    document.getElementById('place-order').addEventListener('click', () => {
-        fetch('http://localhost:3000/api/order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            if (data.message === 'Commande passée avec succès') {
-                window.location.href = '/index';
-            }
-        })
-        .catch(error => console.error('Erreur lors de la passation de la commande:', error));
-    });
-    </script>
+    async function supprimerDuPanier(itemId) {
+        console.log("suppression du plat");
+        console.log(itemId);
+    if (!itemId) {
+        console.error('Aucun ID d\'article fourni pour la suppression.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/cart/delete/${itemId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur lors de la suppression de l'article : ${response.statusText}`);
+        }
+
+        console.log("suppression du plat");
+        console.log(response);
+
+        // Supprime l'article du DOM
+        window.location.reload();
+    } catch (error) {
+        console.error(error.message);
+    }
+}</script>
+
 </body>
 </html>
