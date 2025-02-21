@@ -62,7 +62,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 
-app.get('/index', (req, res) => {
+app.get('/template/index', (req, res) => {
     const isAdmin = req.session.role === 'admin';
     fs.readFile(path.join(__dirname, 'frontend/template/index.html'), 'utf8', (err, data) => {
         if (err) {
@@ -173,7 +173,7 @@ app.post('/login', (req, res) => {
             req.session.email = results[0].email;
             req.session.role = results[0].role;
 
-            res.redirect('/index');
+            res.redirect('/template/index');
         } else {
             res.status(401).send('Identifiants incorrects. Veuillez réessayer.');
         }
