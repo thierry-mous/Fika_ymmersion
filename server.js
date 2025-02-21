@@ -400,6 +400,32 @@ app.use((err, req, res, next) => {
     res.status(500).send('Quelque chose a mal tourné!');
 });
 
+app.get('/categories', (req, res) => {
+    const categoryName = req.query.category;
+  
+    // Vérification du paramètre
+    if (!categoryName) {
+      return res.status(400).send('Le paramètre "category" est manquant');
+    }
+  
+    // Requête SQL pour récupérer la catégorie
+    const sql = 'SELECT * FROM categories WHERE nom = ?';
+    db.query(sql, [categoryName], (err, results) => {
+      if (err) {
+        console.error('Erreur lors de l\'exécution de la requête SQL :', err);
+        return res.status(500).send('Erreur interne du serveur');
+      }
+  
+      // Vérification si la catégorie existe
+      if (results.length === 0) {
+        return res.status(404).send('Catégorie non trouvée');
+      }
+  
+      // Envoyer les résultats en JSON
+      res.json(results);
+    });
+  });
+
 // Démarrer le serveur
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
