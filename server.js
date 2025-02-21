@@ -220,15 +220,15 @@ app.get('/api/plats', (req, res) => {
 // Route pour la page de profil
 app.get('/profile', isAuthenticated, (req, res) => {
     const userId = req.session.userId;
-    const query = 'SELECT nom, prenom FROM utilisateurs WHERE id = ?';
+    const query = 'SELECT nom, prenom, email FROM utilisateurs WHERE id = ?';
 
     db.query(query, [userId], (err, results) => {
         if (err) {
             return res.status(500).send('Erreur lors de la récupération des informations utilisateur');
         }
         if (results.length > 0) {
-            const { nom, prenom } = results[0];
-            res.json({ nom, prenom });
+            const { nom, prenom, email } = results[0];
+            res.json({ nom, prenom, email });
         } else {
             res.status(404).send('Utilisateur non trouvé');
         }
