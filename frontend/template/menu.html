@@ -82,6 +82,7 @@
                     const snackGrid = document.getElementById('snack-grid');
 
                     data.forEach(dish => {
+                        const prixActuel = dish.prix - (dish.prix * dish.promotion / 100);
                         const dishElement = document.createElement('div');
                         dishElement.classList.add('menu-item');
                         dishElement.innerHTML = `
@@ -89,7 +90,7 @@
                                 <img src="../uploads/${dish.image}" alt="${dish.nom}">
                                 <div class="menu-info">
                                     <h3>${dish.nom}</h3>
-                                    <p class="price">€${dish.prix}</p>
+                                    <p class="current-price">Prix: ${prixActuel.toFixed(2)}€</p>
                                 </div>
                             </a>
                             <button class="add-to-cart" data-id="${dish.id}">Ajouter au panier</button>

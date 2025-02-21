@@ -116,3 +116,14 @@ CREATE TABLE IF NOT EXISTS `panier` (
     FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs`(`id`),
     FOREIGN KEY (`plat_id`) REFERENCES `plats`(`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+
+CREATE TABLE IF NOT EXISTS `historique_commandes` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `commande_id` int NOT NULL,
+    `utilisateur_id` int NOT NULL,
+    `date_commande` datetime DEFAULT CURRENT_TIMESTAMP,
+    `total` decimal(10,2) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`commande_id`) REFERENCES `commandes`(`id`),
+    FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
