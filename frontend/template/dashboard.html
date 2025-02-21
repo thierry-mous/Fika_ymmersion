@@ -116,6 +116,7 @@
                         const dishElement = document.createElement('div');
                         dishElement.classList.add('dish');
                         dishElement.innerHTML = `
+                            <img src="../uploads/${dish.image}" alt="${dish.nom}">
                             <h3>${dish.nom}</h3>
                             <p>Prix: ${dish.prix} €</p>
                             <div class="dish-buttons">
