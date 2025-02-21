@@ -190,6 +190,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
+
 app.post('/dashboard', upload.single('image'), (req, res, next) => {
     const { nom, description, prix, categorie_id } = req.body;
     const image = req.file ? req.file.filename : null;
@@ -556,6 +557,24 @@ app.get('/category/:id', (req, res) => {
       });
 });
 
+app.get('/api/random-plat', (req, res) => {
+    const query = `
+        SELECT id, nom, description, prix, image
+        FROM plats
+        ORDER BY RAND()
+        LIMIT 1
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération du plat du jour' });
+        }
+        res.json(results[0]);
+    });
+});
+
+
 app.get('/categories-dishes/:id', (req, res) => {
     const categoryId = req.params.id;
     
@@ -588,7 +607,3 @@ app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6880b6b93a1e328314472bae6e7c234af9960692
