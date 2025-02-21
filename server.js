@@ -60,7 +60,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api', categoryRoutes);
 
 
 app.get('/index', (req, res) => {
@@ -81,6 +80,14 @@ app.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
 // Route pour la page de connexion
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/template/login.html'));
+});
+
+app.get('/menu', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/menu.html'));
+});
+
+app.get('/category', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/template/category.html'));
 });
 
 // Route pour la page d'inscription
@@ -408,17 +415,42 @@ app.use((err, req, res, next) => {
     res.status(500).send('Quelque chose a mal tourné!');
 });
 
-app.get('/categories', (req, res) => {
-    const categoryName = req.query.category;
-  
+app.get('/category/:id', (req, res) => {
+    const categoryId = req.params.id;
+    if (!categoryId) {
+        return res.status(400).send('Le paramètre "category" est manquant');
+      }
+    
+      // Requête SQL pour récupérer la catégorie
+      const sql = 'SELECT * FROM categories WHERE id = ?';
+      db.query(sql, [categoryId], (err, results) => {
+        if (err) {
+          console.error('Erreur lors de l\'exécution de la requête SQL :', err);
+          return res.status(500).send('Erreur interne du serveur');
+        }
+    
+        // Vérification si la catégorie existe
+        if (results.length === 0) {
+          return res.status(404).send('Catégorie non trouvée');
+        }
+    
+        // Envoyer les résultats en JSON
+        res.json(results);
+      });
+});
+
+app.get('/categories-dishes/:id', (req, res) => {
+    const categoryId = req.params.id;
+    
+    console.log(categoryId);
     // Vérification du paramètre
-    if (!categoryName) {
+    if (!categoryId) {
       return res.status(400).send('Le paramètre "category" est manquant');
     }
   
     // Requête SQL pour récupérer la catégorie
-    const sql = 'SELECT * FROM categories WHERE nom = ?';
-    db.query(sql, [categoryName], (err, results) => {
+    const sql = 'SELECT * FROM plats WHERE categorie_id = ?';
+    db.query(sql, [categoryId], (err, results) => {
       if (err) {
         console.error('Erreur lors de l\'exécution de la requête SQL :', err);
         return res.status(500).send('Erreur interne du serveur');
@@ -438,8 +470,4 @@ app.get('/categories', (req, res) => {
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
-
-const express = require('express');
-const router = express.Router();
-const db = require('../config/db');
 
