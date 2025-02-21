@@ -182,6 +182,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
+
 app.post('/dashboard', upload.single('image'), (req, res, next) => {
     const { nom, description, prix, categorie_id } = req.body;
     const image = req.file ? req.file.filename : null;
