@@ -5,170 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIKA - Historique</title>
     <link rel="stylesheet" href="../asset/css/history.css">
-    <link rel="stylesheet" href="../asset/css/order.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../asset/css/navbar.css">
 </head>
 <body>
     <header>
         <div class="back-button" onclick="goBack()">
             <i class="fas fa-arrow-left"></i>
         </div>
-        <h1>Historique</h1>
+        <h1>Historique des Commandes</h1>
         <div class="empty-div"></div>
     </header>
 
     <main>
-        <!-- Première commande -->
-        <div class="order-dropdown">
-            <div class="command_n">
-                <h1>Commande n°12345 <i class="fas fa-chevron-down arrow"></i></h1>
-            </div>
-            <div class="order-content">
-                <div class="items-section">
-                    <div class="items-header">
-                        <span>ITEMS</span>
-                        <span>DESCRIPTION</span>
-                        <span>PRICE</span>
-                    </div>
-
-                    <div class="cart-items">
-                        <div class="cart-item">
-                            <img src="../asset/img/plat.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$10.99</span>
-                        </div>
-
-                        <div class="cart-item">
-                            <img src="../asset/img/salade.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$8.99</span>
-                        </div>
-                    </div>
-                    <div class="summary-line total">
-                        <span>Total</span>
-                        <span>$19.98</span>
-                    </div>
-                </div>
-            </div>
+        <div id="orders-container">
+            <!-- Les commandes seront affichées ici -->
         </div>
-
-        <!-- Deuxième commande -->
-        <div class="order-dropdown">
-            <div class="command_n">
-                <h1>Commande n°12346 <i class="fas fa-chevron-down arrow"></i></h1>
-            </div>
-            <div class="order-content">
-                <div class="items-section">
-                    <div class="items-header">
-                        <span>ITEMS</span>
-                        <span>DESCRIPTION</span>
-                        <span>PRICE</span>
-                    </div>
-
-                    <div class="cart-items">
-                        <div class="cart-item">
-                            <img src="../asset/img/plat.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$10.99</span>
-                        </div>
-
-                        <div class="cart-item">
-                            <img src="../asset/img/salade.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$8.99</span>
-                        </div>
-                    </div>
-                    <div class="summary-line total">
-                        <span>Total</span>
-                        <span>$19.98</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Troisième commande -->
-        <div class="order-dropdown">
-            <div class="command_n">
-                <h1>Commande n°12347 <i class="fas fa-chevron-down arrow"></i></h1>
-            </div>
-            <div class="order-content">
-                <div class="items-section">
-                    <div class="items-header">
-                        <span>ITEMS</span>
-                        <span>DESCRIPTION</span>
-                        <span>PRICE</span>
-                    </div>
-
-                    <div class="cart-items">
-                        <div class="cart-item">
-                            <img src="../asset/img/plat.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$10.99</span>
-                        </div>
-
-                        <div class="cart-item">
-                            <img src="../asset/img/salade.png" alt="Product">
-                            <div class="item-details">
-                                <span class="brand">Brand</span>
-                                <span class="product-name">Product name</span>
-                                <span class="description">Description</span>
-                                <span class="quantity">Quantity: 01</span>
-                            </div>
-                            <span class="price">$8.99</span>
-                        </div>
-                    </div>
-                    <div class="summary-line total">
-                        <span>Total</span>
-                        <span>$19.98</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <nav class="bottom-nav">
-            <a href="../template/index.html">
-                <i class="fas fa-home"></i>
-                <span>Accueil</span>
-            </a>
-            <a href="../template/menu.html">
-                <i class="fas fa-utensils"></i>
-                <span>Menu</span>
-            </a>
-            <a href="../template/order.html">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Panier</span>
-            </a>
-            <a href="../template/profile.html">
-                <i class="fas fa-user"></i>
-                <span>Profil</span>
-            </a>
-        </nav>
     </main>
 
     <script>
@@ -176,31 +27,41 @@
         window.history.back();
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const orderDropdowns = document.querySelectorAll('.order-dropdown');
-        
-        orderDropdowns.forEach(dropdown => {
-            const commandTitle = dropdown.querySelector('.command_n');
-            
-            commandTitle.addEventListener('click', () => {
-                const isActive = dropdown.classList.contains('active');
-                
-                // Ferme tous les dropdowns
-                orderDropdowns.forEach(d => {
-                    d.classList.remove('active');
-                });
-                if (!isActive) {
-                    dropdown.classList.add('active');
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('http://localhost:3000/api/commande')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des commandes');
                 }
+                return response.json();
+            })
+            .then(data => {
+                const ordersContainer = document.getElementById('orders-container');
+                ordersContainer.innerHTML = ''; // Vider le conteneur avant de le remplir
+
+                data.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.classList.add('order-item');
+                    orderElement.innerHTML = `
+                        <img src="../uploads/${order.plat_image}" alt="${order.plat_nom}">
+                        <div class="item-details">
+                            <span class="product-name">Commande n°${order.commande_id}</span>
+                            <span class="description">Plat: ${order.plat_nom}</span>
+                            <span class="quantity">Quantité: ${order.quantite}</span>
+                        </div>
+                        <span class="price">${order.plat_prix} €</span>
+                       <button class="btn-terminer" onclick="CommandeTerminer(${order.commande_id})">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    `;
+                    ordersContainer.appendChild(orderElement);
+                });
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la récupération des commandes');
             });
-        });
     });
-    
-    fetch('http://localhost:3000/api/commande')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    }); 
     </script>
 </body>
 </html>

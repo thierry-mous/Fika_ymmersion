@@ -602,9 +602,20 @@ app.get('/categories-dishes/:id', (req, res) => {
     });
   });
 
-app.get('/api/commande', (req, res) => {
-    const query = 'SELECT * FROM commandes WHERE statut = "en cours"';
+  app.get('/api/commande', (req, res) => {
+    const query = `
+        SELECT c.date_commande, c.id AS commande_id, 
+               dc.quantite, p.nom AS plat_nom, p.prix AS plat_prix, p.image AS plat_image
+        FROM commandes c
+        JOIN details_commande dc ON c.id = dc.commande_id
+        JOIN plats p ON dc.plat_id = p.id
+        WHERE c.statut = "en cours"
+    `;
     db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération des commandes' });
+        }
         res.json(results);
     });
 });

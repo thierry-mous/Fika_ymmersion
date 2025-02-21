@@ -140,7 +140,7 @@
         .then(data => {
             alert(data.message);
             if (data.message === 'Commande passée avec succès') {
-                window.location.href = '/index';
+                window.location.href = '/template/index';
             }
         })
         .catch(error => console.error('Erreur lors de la passation de la commande:', error));
