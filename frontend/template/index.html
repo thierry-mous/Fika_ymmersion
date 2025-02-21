@@ -16,7 +16,6 @@
             <a href="../template/history.html"><i class="fas fa-history"></i></a>
             <a href="../template/notif.html"><i class="fas fa-bell"></i></a>
             <a href="../template/stats.html"><i class="fas fa-chart-line"></i></a>
-            <a href="../template/dashboard.html"><i class="fas fa-plus"></i></a>
         </div>
     </header>
 
@@ -25,25 +24,25 @@
         <section class="categories">
             <div class="categories-scroll">
                 <div class="category-item">
-                    <a href="/category?id=2">
+                    <a href="menu.html?category=plat-chaud">
                         <img src="../asset/img/plat.png" alt="plat chaud">
                         <span>plat chaud Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="/category?id=4">
+                    <a href="menu.html?category=sandwich">
                         <img src="../asset/img/sandwich.png" alt="sandwich">
                         <span>Y-snak</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="/category?id=1">
+                    <a href="menu.html?category=salade">
                         <img src="../asset/img/salade.png" alt="Salade">
                         <span>Salade Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="/category?id=3">
+                    <a href="menu.html?category=dessert">
                         <img src="../asset/img/dessert.png" alt="Dessert">
                         <span>Y-Dessert</span>
                     </a>
@@ -53,16 +52,8 @@
     </div>
         <section class="plat-du-jour">
             <h2>Plat du jour</h2>
-            <div class="plat-card">
-                <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                <div class="plat-info">
-                    <h3>Poke Poulet</h3>
-                    <p class="description">Riz, poulet mariné, avocat, légumes frais</p>
-                    <div class="price-time">
-                        <p class="price">€8.50</p>
-                        <span class="time"><i class="fas fa-clock"></i> 5-10 min</span>
-                    </div>
-                </div>
+            <div class="plat-card" id="plat-du-jour">
+                <!-- Le plat du jour sera affiché ici -->
             </div>
         </section>
 
@@ -96,6 +87,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Récupérer le plat du jour
+            fetch('http://localhost:3000/api/random-plat')
+                .then(response => response.json())
+                .then(plat => {
+                    const platDuJour = document.getElementById('plat-du-jour');
+                    platDuJour.innerHTML = `
+                        <img src="../uploads/${plat.image}" alt="${plat.nom}">
+                        <div class="plat-info">
+                            <h3>${plat.nom}</h3>
+                            <p class="description">${plat.description}</p>
+                            <div class="price-time">
+                                <p class="price">€${plat.prix.toFixed(2)}</p>
+                                <span class="time"><i class="fas fa-clock"></i> 5-10 min</span>
+                            </div>
+                        </div>
+                    `;
+                })
+                .catch(error => console.error('Erreur lors de la récupération du plat du jour:', error));
+
+            // Récupérer les promotions
             fetch('http://localhost:3000/api/promotions')
                 .then(response => response.json())
                 .then(data => {

@@ -217,8 +217,9 @@ h2 {
     background: white;
     border-radius: 15px;
     overflow: hidden;
-    margin: 15px;
+    margin: 15px 10%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
 }
 
 .plat-info, .menu-info {
