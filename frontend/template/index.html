@@ -50,25 +50,7 @@
             </div>
         </section>
     </div>
-
-        <script>
-            // Récupérer le paramètre "category" dans l'URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const category = urlParams.get('category');
-    
-            // Filtrer les éléments du menu selon la catégorie
-            if (category) {
-                // Exemple de filtrage : cacher les éléments qui ne correspondent pas à la catégorie
-                const items = document.querySelectorAll('.menu-item'); // Remplace par tes éléments de menu
-                items.forEach(item => {
-                    if (!item.classList.contains(category)) {
-                        item.style.display = 'none'; // Cache les éléments qui ne correspondent pas
-                    }
-                });
-            }
-        </script>
-        
-
+     
         <section class="plat-du-jour">
             <h2>Plat du jour</h2>
             <div class="plat-card">
@@ -126,7 +108,7 @@
     <nav class="bottom-nav">
         <a href="../template/index.html" class="active">
             <i class="fas fa-home"></i>
-            <span>Acceuil</span>
+            <span>Accueil</span>
         </a>
         <a href="../template/menu.html">
             <i class="fas fa-utensils"></i>
