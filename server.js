@@ -602,6 +602,13 @@ app.get('/categories-dishes/:id', (req, res) => {
     });
   });
 
+app.get('/api/commande', (req, res) => {
+    const query = 'SELECT * FROM commandes WHERE statut = "en cours"';
+    db.query(query, (err, results) => {
+        res.json(results);
+    });
+});
+
 // Démarrer le serveur
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
