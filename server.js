@@ -9,6 +9,7 @@ const multer = require('multer');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware');
 const fs = require('fs');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 const app = express();
 const port = 3000;
@@ -60,6 +61,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api', categoryRoutes);
 
 
 app.get('/index', (req, res) => {
@@ -276,11 +278,6 @@ app.delete('/api/cart/delete/:id', (req, res) => {
 });
 
 
-
-
-
-
-
 app.post('/api/cart', (req, res) => {
     const { id } = req.body;
     const userId = req.session.userId;
@@ -404,3 +401,8 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
+
+const express = require('express');
+const router = express.Router();
+const db = require('../config/db');
+
