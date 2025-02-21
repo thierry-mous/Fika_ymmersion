@@ -9,7 +9,6 @@ const multer = require('multer');
 const session = require('express-session');
 const { isAuthenticated, isAdmin } = require('./middleware');
 const fs = require('fs');
-const categoryRoutes = require('./routes/categoryRoutes');
 
 const app = express();
 const port = 3000;
@@ -390,6 +389,18 @@ app.post('/api/order', (req, res) => {
     });
 });
 
+// Route pour obtenir les plats par catégorie
+app.get('/api/categories', (req, res) => {
+    const query = 'SELECT * FROM categories';
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ error: 'Erreur lors de la récupération des catégories' });
+        }
+        res.json(results);
+    });
+});
 
 // Middleware pour gérer les erreurs
 app.use((err, req, res, next) => {
@@ -432,16 +443,3 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 
-router.get('/categories', (req, res) => {
-    const query = 'SELECT * FROM categories';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erreur lors de la récupération des catégories:', err);
-            res.status(500).json({ error: 'Erreur serveur' });
-            return;
-        }
-        res.json(results);
-    });
-});
-
-module.exports = router;
