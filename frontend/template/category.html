@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA - Menu</title>
+    <link rel="stylesheet" href="../asset/css/menu.css">
+    <link rel="stylesheet" href="../asset/css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../asset/img/logo-fika.png" alt="FIKA">
+        </div>
+        <div class="header-icons">
+            <a href="../template/history.html"><i class="fas fa-history"></i></a>
+            <a href="../template/notif.html"><i class="fas fa-bell"></i></a>
+            <a href="../template/stats.html"><i class="fas fa-chart-line"></i></a>
+            <a href="../template/dashboard.html"><i class="fas fa-plus"></i></a>
+        </div>
+    </header>
+
+    <main>
+        <h1>A la carte</h1>
+        
+        <section class="menu-category">
+            <h2 class="category-name"></h2>
+            <div class="menu-grid" id="category-grid">
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="../template/index.html" class="active">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="../template/menu.html">
+            <i class="fas fa-utensils"></i>
+            <span>Menu</span>
+        </a>
+        <a href="../template/order.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Panier</span>
+        </a>
+        <a href="../template/profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryId = urlParams.get('id');
+            console.log(categoryId);
+            fetch(`/category/${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('.category-name').textContent = data[0].nom;
+                })
+
+            fetch(`/categories-dishes/${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const categoryGrid = document.getElementById('category-grid');
+                    data.forEach(dish => {
+                        const dishElement = document.createElement('div');
+                        dishElement.classList.add('menu-item');
+                        dishElement.innerHTML = `
+                            <a href="product.html?id=${dish.id}">
+                                <img src="../uploads/${dish.image}" alt="${dish.nom}">
+                                <div class="menu-info">
+                                    <h3>${dish.nom}</h3>
+                                    <p class="price">€${dish.prix}</p>
+                                </div>
+                            </a>
+                            <button class="add-to-cart" data-id="${dish.id}">Ajouter au panier</button>
+                        `;
+                        categoryGrid.appendChild(dishElement);
+                    })
+                })
+                .catch(error => console.error('Erreur lors de la récupération des plats:', error));
+        });
+    </script>
+</body>
+</html>
