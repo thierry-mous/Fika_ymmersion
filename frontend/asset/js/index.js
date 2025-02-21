@@ -46,3 +46,20 @@ function moveCarousel(direction) {
     const offset = -currentIndex * 100; // Calculate offset
     carouselInner.style.transform = `translateX(${offset}%)`;
 }
+
+function fetchCategory(category) {
+    fetch(`/categories?category=${category}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Catégorie non trouvée ou erreur serveur');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<h2>Résultat :</h2>`;    
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+}

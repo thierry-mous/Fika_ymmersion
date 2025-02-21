@@ -60,6 +60,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api', categoryRoutes);
 
 
 app.get('/index', (req, res) => {
@@ -274,11 +275,6 @@ app.delete('/api/cart/delete/:id', (req, res) => {
 });
 
 
-
-
-
-
-
 app.post('/api/cart', (req, res) => {
     const { id } = req.body;
     const userId = req.session.userId;
@@ -486,6 +482,14 @@ app.get('/api/order-history', (req, res) => {
         if (err) {
             console.error('Erreur SQL:', err);
             return res.status(500).json({ message: 'Erreur lors de la récupération de l\'historique des commandes' });
+// Route pour obtenir les plats par catégorie
+app.get('/api/categories', (req, res) => {
+    const query = 'SELECT * FROM categories';
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ error: 'Erreur lors de la récupération des catégories' });
         }
         res.json(results);
     });
@@ -515,7 +519,38 @@ app.use((err, req, res, next) => {
     res.status(500).send('Quelque chose a mal tourné!');
 });
 
+app.get('/categories', (req, res) => {
+    const categoryName = req.query.category;
+  
+    // Vérification du paramètre
+    if (!categoryName) {
+      return res.status(400).send('Le paramètre "category" est manquant');
+    }
+  
+    // Requête SQL pour récupérer la catégorie
+    const sql = 'SELECT * FROM categories WHERE nom = ?';
+    db.query(sql, [categoryName], (err, results) => {
+      if (err) {
+        console.error('Erreur lors de l\'exécution de la requête SQL :', err);
+        return res.status(500).send('Erreur interne du serveur');
+      }
+  
+      // Vérification si la catégorie existe
+      if (results.length === 0) {
+        return res.status(404).send('Catégorie non trouvée');
+      }
+  
+      // Envoyer les résultats en JSON
+      res.json(results);
+    });
+  });
+
 // Démarrer le serveur
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
+
+const express = require('express');
+const router = express.Router();
+const db = require('../config/db');
+

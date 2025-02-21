@@ -20,53 +20,36 @@
     </header>
 
     <main>
+        <div class="categories">
         <section class="categories">
             <div class="categories-scroll">
                 <div class="category-item">
-                    <a href="menu.html?category=plat-chaud">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/plat.png" alt="plat chaud">
                         <span>plat chaud Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=sandwich">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/sandwich.png" alt="sandwich">
                         <span>Y-snak</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=salade">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/salade.png" alt="Salade">
                         <span>Salade Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=dessert">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/dessert.png" alt="Dessert">
                         <span>Y-Dessert</span>
                     </a>
                 </div>
             </div>
         </section>
-
-        <script>
-            // Récupérer le paramètre "category" dans l'URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const category = urlParams.get('category');
-    
-            // Filtrer les éléments du menu selon la catégorie
-            if (category) {
-                // Exemple de filtrage : cacher les éléments qui ne correspondent pas à la catégorie
-                const items = document.querySelectorAll('.menu-item'); // Remplace par tes éléments de menu
-                items.forEach(item => {
-                    if (!item.classList.contains(category)) {
-                        item.style.display = 'none'; // Cache les éléments qui ne correspondent pas
-                    }
-                });
-            }
-        </script>
-        
-
+    </div>
         <section class="plat-du-jour">
             <h2>Plat du jour</h2>
             <div class="plat-card">
