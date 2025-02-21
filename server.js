@@ -406,3 +406,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 
+router.get('/categories', (req, res) => {
+    const query = 'SELECT * FROM categories';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des catégories:', err);
+            res.status(500).json({ error: 'Erreur serveur' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+module.exports = router;
