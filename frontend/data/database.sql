@@ -60,10 +60,10 @@ VALUES
 
 INSERT INTO `plats` (`nom`, `description`, `prix`, `categorie_id`, `promotion`, `image`) 
 VALUES 
-('Salade César', 'Salade, poulet, parmesan, croutons, sauce César', 12.50, 1, 0, 'salade_cesar.jpg'),
+('Salade César', 'Salade, poulet, parmesan, croutons, sauce César', 12.50, 1, 20, 'salade_cesar.jpg'),
 ('Salade Niçoise', 'Salade, thon, œufs, olives, haricots verts, tomates', 13.00, 1, 0, 'salade_nicoise.jpg'),
 ('Poke Bowl Saumon', 'Riz, saumon frais, avocat, concombre, edamame', 15.99, 1, 0, 'poke_saumon.jpg'),
-('Poke Bowl Poulet', 'Riz, poulet mariné, avocat, concombre, edamame', 14.99, 1, 0, 'poke_poulet.jpg'),
+('Poke Bowl Poulet', 'Riz, poulet mariné, avocat, concombre, edamame', 14.99, 1, 15, 'poke_poulet.jpg'),
 ('Burger Poulet', 'Pain, poulet, fromage, salade, tomate, sauce', 10.50, 2, 0, 'burger_poulet.jpg'),
 ('Wrap Poulet', 'Tortilla, poulet, fromage, salade, tomate, sauce', 8.50, 2, 0, 'wrap_poulet.jpg'),
 ('Wrap Saumon', 'Tortilla, saumon fumé, fromage, salade, tomate, sauce', 9.50, 2, 0, 'wrap_saumon.jpg'),
@@ -72,7 +72,7 @@ VALUES
 ('Lasagnes', 'Pâtes, bœuf, tomate, béchamel, fromage', 12.00, 2, 0, 'lasagnes.jpg'),
 ('Tiramisu', 'Café, mascarpone, cacao, biscuits', 6.50, 3, 0, 'tiramisu.jpg'),
 ('Tiramisu Kinder Bueno', 'Café, mascarpone, cacao, biscuits', 6.50, 3, 0, 'tiramisu_buenos.jpg'),
-('Fondant au Chocolat', 'Chocolat, beurre, œufs, sucre, farine', 7.00, 3, 0, 'fondant_chocolat.jpg'),
+('Fondant au Chocolat', 'Chocolat, beurre, œufs, sucre, farine', 7.00, 3, 10, 'fondant_chocolat.jpg'),
 ('Cheesecake', 'Fromage frais, biscuits, sucre, œufs', 6.50, 3, 0, 'cheesecake.jpg'),
 ('Muffin Myrtille', 'Farine, sucre, œufs, myrtilles', 3.50, 4, 0, 'muffin_myrtille.jpg'),
 ('Cookie Chocolat', 'Farine, sucre, œufs, pépites de chocolat', 2.50, 4, 0, 'cookie_chocolat.jpg'),

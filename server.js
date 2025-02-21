@@ -587,8 +587,3 @@ app.get('/categories-dishes/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 6880b6b93a1e328314472bae6e7c234af9960692
