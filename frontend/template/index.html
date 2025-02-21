@@ -20,34 +20,39 @@
     </header>
 
     <main>
-        <section class="categories">
+       <div class="categories">
             <div class="categories-scroll">
                 <div class="category-item">
+<<<<<<< HEAD
                     <a href="menu.html?category=plat-chaud">
                         <img src="../asset/img/plat.png" alt="plat chaud" onclick="fetchCategory('plat-chaud')">
+=======
+                    <a href="menu.html?category=${category.id}">
+                        <img src="../asset/img/plat.png" alt="plat chaud">
+>>>>>>> 79c9789e02dabeccc419567210f62166f7bd96a2
                         <span>plat chaud Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=sandwich">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/sandwich.png" alt="sandwich">
                         <span>Y-snak</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=salade">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/salade.png" alt="Salade">
                         <span>Salade Y-novant</span>
                     </a>
                 </div>
                 <div class="category-item">
-                    <a href="menu.html?category=dessert">
+                    <a href="menu.html?category=${category.id}">
                         <img src="../asset/img/dessert.png" alt="Dessert">
                         <span>Y-Dessert</span>
                     </a>
                 </div>
             </div>
-        </section>
+        </div>
 
         <script>
             // Récupérer le paramètre "category" dans l'URL
