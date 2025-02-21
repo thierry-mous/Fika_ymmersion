@@ -88,45 +88,59 @@
             </div>
 
             <div class="stats-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Plat</th>
-                            <th>Ventes</th>
-                            <th>Revenus</th>
-                            <th>Note moyenne</th>
-                            <th>Tendance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="dish-cell">
-                                    <img src="../asset/img/plat.png" alt="Poke Bowl Saumon">
-                                    <span>Poke Bowl Saumon</span>
-                                </div>
-                            </td>
-                            <td>158</td>
-                            <td>2 370€</td>
-                            <td>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
-                                </div>
-                            </td>
-                            <td class="trend-up"><i class="fas fa-arrow-up"></i> 12%</td>
-                        </tr>
-                        <!-- Autres lignes similaires... -->
-                    </tbody>
-                </table>
+                <div class="history-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Plat</th>
+                                <th>Quantité</th>
+                                <th>Prix</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-history-body">
+                            <!-- Les commandes seront affichées ici -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
+
+        <!-- Section de l'historique des commandes -->
+        
     </main>
 
     <script>
         function goBack() {
             window.history.back();
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/api/order-history')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const orderHistoryBody = document.getElementById('order-history-body');
+
+                    data.forEach(order => {
+                        const orderRow = document.createElement('tr');
+                        orderRow.innerHTML = `
+                            <td>${new Date(order.date_commande).toLocaleString()}</td>
+                            <td>${order.nom}</td>
+                            <td>${order.quantite}</td>
+                            <td>€${order.prix}</td>
+                            <td>€${order.total}</td>
+                        `;
+                        orderHistoryBody.appendChild(orderRow);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération de l\'historique des commandes:', error));
+        });
     </script>
 </body>
 </html>

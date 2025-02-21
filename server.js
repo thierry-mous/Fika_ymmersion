@@ -169,13 +169,11 @@ app.post('/login', (req, res) => {
             return res.status(500).json({ error: 'Erreur de base de données' });
         }
         if (results.length > 0) {
-            // Connexion réussie, stocker les informations de l'utilisateur dans la session
             req.session.userId = results[0].id;
             req.session.email = results[0].email;
             req.session.role = results[0].role;
 
-            // Envoyer un cookie de session
-            res.redirect('/index'); // Rediriger vers la page d'accueil
+            res.redirect('/index');
         } else {
             res.status(401).send('Identifiants incorrects. Veuillez réessayer.');
         }
@@ -396,8 +394,109 @@ app.post('/api/order', (req, res) => {
     });
 });
 
-// Route pour obtenir les plats par catégorie
-app.get('/api/categories', (req, res) => {
+app.post('/api/order', (req, res) => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: 'Vous devez être connecté pour passer une commande' });
+    }
+
+    const getCartQuery = `
+        SELECT plat_id, quantite, prix
+        FROM panier
+        JOIN plats ON panier.plat_id = plats.id
+        WHERE utilisateur_id = ?
+    `;
+
+    db.query(getCartQuery, [userId], (err, cartItems) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération du panier' });
+        }
+
+        if (cartItems.length === 0) {
+            return res.status(400).json({ message: 'Votre panier est vide' });
+        }
+
+        const total = cartItems.reduce((sum, item) => sum + item.prix * item.quantite, 0);
+
+        const createOrderQuery = `
+            INSERT INTO commandes (utilisateur_id, total)
+            VALUES (?, ?)
+        `;
+
+        db.query(createOrderQuery, [userId, total], (err, result) => {
+            if (err) {
+                console.error('Erreur SQL:', err);
+                return res.status(500).json({ message: 'Erreur lors de la création de la commande' });
+            }
+
+            const orderId = result.insertId;
+
+            const createOrderDetailsQuery = `
+                INSERT INTO details_commande (commande_id, plat_id, quantite)
+                VALUES ?
+            `;
+
+            const orderDetails = cartItems.map(item => [orderId, item.plat_id, item.quantite]);
+
+            db.query(createOrderDetailsQuery, [orderDetails], (err) => {
+                if (err) {
+                    console.error('Erreur SQL:', err);
+                    return res.status(500).json({ message: 'Erreur lors de la création des détails de la commande' });
+                }
+
+                const clearCartQuery = `
+                    DELETE FROM panier
+                    WHERE utilisateur_id = ?
+                `;
+
+                db.query(clearCartQuery, [userId], (err) => {
+                    if (err) {
+                        console.error('Erreur SQL:', err);
+                        return res.status(500).json({ message: 'Erreur lors de la suppression du panier' });
+                    }
+
+                    const createHistoryQuery = `
+                        INSERT INTO historique_commandes (commande_id, utilisateur_id, total)
+                        VALUES (?, ?, ?)
+                    `;
+
+                    db.query(createHistoryQuery, [orderId, userId, total], (err) => {
+                        if (err) {
+                            console.error('Erreur SQL:', err);
+                            return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'historique de la commande' });
+                        }
+
+                        res.status(200).json({ message: 'Commande passée avec succès' });
+                    });
+                });
+            });
+        });
+    });
+});
+
+app.get('/api/order-history', (req, res) => {
+    const query = `
+        SELECT hc.id, hc.date_commande, hc.total, p.nom, p.prix, dc.quantite
+        FROM historique_commandes hc
+        JOIN details_commande dc ON hc.commande_id = dc.commande_id
+        JOIN plats p ON dc.plat_id = p.id
+        ORDER BY hc.date_commande DESC
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération de l\'historique des commandes' });
+        }
+        res.json(results);
+    });
+});
+
+
+
+    app.get('/api/categories', (req, res) => {
     const query = 'SELECT * FROM categories';
     
     db.query(query, (err, results) => {
@@ -408,6 +507,24 @@ app.get('/api/categories', (req, res) => {
         res.json(results);
     });
 });
+
+app.get('/api/promotions', (req, res) => {
+    const query = `
+        SELECT id, nom, description, prix, image, promotion
+        FROM plats
+        WHERE promotion > 0
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur SQL:', err);
+            return res.status(500).json({ message: 'Erreur lors de la récupération des promotions' });
+        }
+        res.json(results);
+    });
+});
+
+
 
 // Middleware pour gérer les erreurs
 app.use((err, req, res, next) => {
@@ -471,3 +588,7 @@ app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6880b6b93a1e328314472bae6e7c234af9960692

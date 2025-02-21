@@ -16,6 +16,7 @@
             <a href="../template/history.html"><i class="fas fa-history"></i></a>
             <a href="../template/notif.html"><i class="fas fa-bell"></i></a>
             <a href="../template/stats.html"><i class="fas fa-chart-line"></i></a>
+            <a href="../template/dashboard.html"><i class="fas fa-plus"></i></a>
         </div>
     </header>
 
@@ -67,39 +68,8 @@
 
         <section class="menu-categories">
             <h2>Promotions</h2>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <img src="../asset/img/pokepoulet.jpg" alt="Poke Poulet">
-                    <div class="menu-info">
-                        <h3>Poke Poulet</h3>
-                        <p class="description">Riz, poulet mariné, avocat</p>
-                        <p class="price">€8.50</p>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <img src="../asset/img/pokepoulet.jpg" alt="Poke Saumon">
-                    <div class="menu-info">
-                        <h3>Poke Saumon</h3>
-                        <p class="description">Riz, saumon frais, avocat</p>
-                        <p class="price">€9.50</p>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <img src="../asset/img/pokepoulet.jpg" alt="Buddha Bowl">
-                    <div class="menu-info">
-                        <h3>Buddha Bowl</h3>
-                        <p class="description">Quinoa, légumes de saison, tofu</p>
-                        <p class="price">€8.90</p>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <img src="../asset/img/pokepoulet.jpg" alt="Salade César">
-                    <div class="menu-info">
-                        <h3>Salade César</h3>
-                        <p class="description">Poulet grillé, parmesan, croûtons</p>
-                        <p class="price">€7.90</p>
-                    </div>
-                </div>
+            <div class="menu-grid" id="promotions-grid">
+                <!-- Les plats avec une promotion seront affichés ici -->
             </div>
         </section>
     </main>
@@ -123,5 +93,33 @@
         </a>
         <!-- ADMIN_LINK -->
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/api/promotions')
+                .then(response => response.json())
+                .then(data => {
+                    const promotionsGrid = document.getElementById('promotions-grid');
+
+                    data.forEach(plat => {
+                        const prixActuel = plat.prix - (plat.prix * plat.promotion / 100);
+                        const platElement = document.createElement('div');
+                        platElement.classList.add('menu-item');
+                        platElement.innerHTML = `
+                            <a href="product.html?id=${plat.id}">
+                                <img src="../uploads/${plat.image}" alt="${plat.nom}">
+                                <div class="menu-info">
+                                    <h3>${plat.nom}</h3>
+                                    <p class="description">${plat.description}</p>
+                                    <p class="current-price">Prix: €${prixActuel.toFixed(2)}</p>
+                                </div>
+                            </a>
+                        `;
+                        promotionsGrid.appendChild(platElement);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des promotions:', error));
+        });
+    </script>
 </body>
-</html> 
+</html>
